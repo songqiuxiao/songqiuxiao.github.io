@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://songqiuxiao.github.io').hostname,
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="随着前端工程化的不断完善，CSS 预处理器已经成为项目中不可缺少的部分，很多人在项目技术选型阶段就会先选择一个 CSS 预处理器，绝大部分前端工程的脚手架也内置了一系列的 CSS 预处理的模版，大家已经习惯了享受 CSS 预处理器带来的书写代码的灵活流畅，反而将原生的 CSS 冷落在一旁。 可能许多前端开发人员依然觉得 CSS 预处理器属于比较新的技术，其实不然，最早的 CSS 预处理器 Sass">
+<meta property="og:type" content="article">
+<meta property="og:title" content="css-preprocessor">
+<meta property="og:url" content="https:&#x2F;&#x2F;songqiuxiao.github.io&#x2F;2019&#x2F;11&#x2F;19&#x2F;css-preprocessor&#x2F;index.html">
+<meta property="og:site_name" content="宋秋晓">
+<meta property="og:description" content="随着前端工程化的不断完善，CSS 预处理器已经成为项目中不可缺少的部分，很多人在项目技术选型阶段就会先选择一个 CSS 预处理器，绝大部分前端工程的脚手架也内置了一系列的 CSS 预处理的模版，大家已经习惯了享受 CSS 预处理器带来的书写代码的灵活流畅，反而将原生的 CSS 冷落在一旁。 可能许多前端开发人员依然觉得 CSS 预处理器属于比较新的技术，其实不然，最早的 CSS 预处理器 Sass">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-11-19T15:56:49.000Z">
+<meta property="article:modified_time" content="2019-12-18T16:33:51.732Z">
+<meta property="article:author" content="宋秋晓">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://songqiuxiao.github.io/2019/11/19/css-preprocessor/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>css-preprocessor | 宋秋晓</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">宋秋晓</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">You are the JavaScript in my HTML</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://songqiuxiao.github.io/2019/11/19/css-preprocessor/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="宋秋晓">
+      <meta itemprop="description" content="学习总结 思考感悟 知识管理">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="宋秋晓">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          css-preprocessor
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-19 23:56:49" itemprop="dateCreated datePublished" datetime="2019-11-19T23:56:49+08:00">2019-11-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-19 00:33:51" itemprop="dateModified" datetime="2019-12-19T00:33:51+08:00">2019-12-19</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>随着前端工程化的不断完善，CSS 预处理器已经成为项目中不可缺少的部分，很多人在项目技术选型阶段就会先选择一个 CSS 预处理器，绝大部分前端工程的脚手架也内置了一系列的 CSS 预处理的模版，大家已经习惯了享受 CSS 预处理器带来的书写代码的灵活流畅，反而将原生的 CSS 冷落在一旁。</p>
+<p>可能许多前端开发人员依然觉得 CSS 预处理器属于比较新的技术，其实不然，最早的 CSS 预处理器 Sass 从 07 年诞生距今已有 12 年，相对较新的的 Stylus 也已发布 9 年了。</p>
+<p>前端的技术栈发展突飞猛进，W3C 的 CSS 工作组也一直在持续从社区汲取营养，加快 CSS 的迭代。那么到现在为止，CSS 是否可以取代 CSS 预处理器的地位？CSS 预处理器会不会成为 CSS 过渡时期的产物呢？</p>
+<a id="more"></a>
+<p>W3C 介绍<br>CSS 是开放网络的核心语言之一，由 W3C 规范 实现跨浏览器的标准化。因此，在深入了解 CSS 规范更新进度之前，我们有必要先了解一下 W3C 及其规范制定流程。</p>
+<p>W3C 也就是万维网联盟（World Wide Web Consortium），又称 W3C 理事会，是万维网的主要国际标准组织。为半自治非政府组织（quasi-autonomous non-governmental organisation）。由 蒂姆·伯纳斯-李（Tim Berners-Lee）于 1994年10月 于麻省理工学院 MIT 计算机科学与人工智能实验室（MIT／LCS）创立。</p>
+<p>W3C 制定了一系列标准并督促网络应用开发者和内容提供者遵循这些标准。标准的内容包括使用语言的规范，开发中使用的导则和解释引擎的行为等等。W3C制定了包括 HTML、DOM、SVG、XML和 CSS 等的众多影响深远的标准规范。</p>
+<p>W3C 规范制定流程<br>因为接下来我们需要谈到一些不同阶段的 CSS 规范，因此这里有必要简单介绍一下 W3C 的规范制定流程。</p>
+<p>按照 W3C 的 Process Document，一个推荐标准的发展需要通过不同的阶段。</p>
+<p>img</p>
+<p>其中几个主要的阶段分别为：</p>
+<p>WD 工作草案（Working draft）<br>CR 候选推荐标准（Candidate recommendation）<br>PR 提案推荐标准（recommendation）<br>REC W3C推荐标准（W3C recommendation）<br>篇幅有限，这里就不详细展开讲解 W3C 的标准流程了，如果想了解更多关于 W3C 标准流程与组织架构 的信息，可以查看W3C标准流程与组织架构。<br>CSS 的历史<br>HTML 和 CSS 是那么密不可分，以至于你可能会觉得它们是一起出现的。实际上，自 1989 年 Tim Berners Lie 发明互联网后的多年中，这个世界上都不存在一个名为 CSS 的事物（更别说 CSS 预处理器了），Web 的原始版本根本就没有提供一种装饰网页的方法。</p>
+<p>HTML 规范虽然规定了网页中的标题、段落应该使用的标签，但是没有涉及这些内容应该以何种样式(比如大小、位置、间距、缩进等属性)呈现在浏览器中。</p>
+<p>不过，在随后仅短短10年后，CSS就被一个现代的 Web 社区全面采用，这期间的发生了一系列有趣的故事，有兴趣的可以看一下 A Look Back at the History of CSS。</p>
+<p>CSS1<br>于1994年，Håkon Wium Lie (哈肯·维姆·莱) 和 Bert Bos (伯特·波斯) 合作设计CSS。他们在1994年首次在芝加哥的一次会议上第一次展示了CSS的建议。</p>
+<p>1996年12月 发表的 CSS1 的要求有第一版主要规定了选择器、样式属性、伪类 、对象几个大的部分。</p>
+<p>CSS2<br>CSS2 在 1998 年 5月 由 W3C 发布，CSS2 规范是基于 CSS1 设计的，扩充和改进了很多更加强大的属性。包括选择器、位置模型、布局、表格样式、媒体类型、伪类、光标样式。</p>
+<p>Cascading Style Sheets Level 2 Revision 1，通常被称为“ CSS 2.1” ，修复了 CSS 2中的错误，删除了支持不良或不能完全互操作的特性，并为规范增加了已经实现的浏览器扩展。 为了遵守 W3C 标准化技术规范的过程，CSS 2.1 在 Working Draft (WD) 状态和 Candidate Recommendation (CP) 状态之间来回了很多年。</p>
+<p>CSS 2.1于 2004 年 2 月 25 日首次成为 Candidate Recommendation (CR)标准，但在 2005 年 6 月 13 日又回到 Working Draft (WD) 中进行进一步审查。 它于 2007 年 7 月 19 日回到 Candidate Recommendation (CP) 标准，然后在 2009 年更新了两次。 然而，由于作出了修改和澄清，它再次回到了2010年12月7日的 Last Call Working Draft 。</p>
+<p>CSS3<br>CSS3 是层叠样式表（Cascading Style Sheets）语言的最新版本，旨在扩展CSS2.1。</p>
+<p>CSS Level 2 经历了 9 年的时间（从 2002 年 8 月到 2011 年 6 月）才达到 Recommendation（推荐） 状态，主要原因是被一些次要特性拖了后腿。为了加快那些已经确认没有问题的特性的标准化速度，W3C 的 CSS Working Group 作出了一项被称为 Beijing doctrine 的决定，将 CSS 划分为许多小组件，称之为模块。这些模块彼此独立，按照各自的进度来进行标准化。其中一些已经是 W3C Recommendation 状态，也有一些仍是 Early Working Drafts（早期工作草案）。当新的需求被肯定后， 新的模块也会同样地添加进来。</p>
+<p>img</p>
+<p>从形式上来说，CSS3 标准自身已经不存在了。每个模块都被独立的标准化，现在标准 CSS 包括了修订后的 CSS2.1 以及完整模块对它的扩充，模块的 level（级别）数并不一致。可以在每个时间点上为 CSS 标准定义一个 snapshots（快照），列出 CSS 2.1 和成熟的模块。</p>
+<p>W3C 会定期的发布这些 snapshots，如 2007, 2010, 2015 或 2017。</p>
+<p>目前为止，还没有 level 超过 3 的模块被标准化，未来应该会有所改变。 不过有些模块，比如 Selectors（选择器）4 或 CSS Borders and Backgrounds（边框和背景）Level 4 早已拥有了 Editor’s Draft（编辑草案），即使它们还没达到 First Published Working Draft（初次发布工作草案）状态。</p>
+<p>有一张图可以更加直观的表示当前 CSS3 Modules 的分类和状态：</p>
+<p>img</p>
+<p>问题：为什么没有 CSS4？<br>There is no single, integrated CSS4 specification, because it is split into separate “level 4” modules.<br>Level 4 不等于 CSS 4 ，如 CSS Custom Properties for Cascading Variables Module Level 1 总不能说它是 CSS1 吧。</p>
+<p>CSS 预处理器<br>CSS 自诞生以来，基本语法和核心机制一直没有本质上的变化，在很长一段时间内，它的发展几乎全是表现力层面上的提升。</p>
+<p>最开始 CSS 在网页中的作用只是辅助性的装饰，轻便易学是最大的需求；然而如今网站的复杂度已经不可同日而语，原生 CSS 已经让开发者力不从心。</p>
+<p>img</p>
+<p>当一门语言的能力不足而用户的运行环境又不支持其它选择的时候，这门语言就会沦为 “编译目标” 语言。开发者将选择另一门更高级的语言来进行开发，然后编译到底层语言以便实际运行。于是，在前端领域，天降大任于斯人也，CSS 预处理器应运而生。</p>
+<p>百花齐放<br>CSS 预处理器是一个能让你通过预处理器自己独有的语法来生成 CSS 的程序。</p>
+<p>市面上有很多 CSS 预处理器可供选择，且绝大多数 CSS 预处理器会增加一些原生 CSS 不具备或不完善的高级特性，这些特性让 CSS 的结构更加具有可读性且易于维护。当前社区代表的 CSS 预处理器 主要有一下几种：</p>
+<p>Sass：2007 年诞生，最早也是最成熟的 CSS 预处理器，拥有 Ruby 社区的支持和 Compass 这一最强大的 CSS 框架，目前受 LESS 影响，已经进化到了全面兼容 CSS 的 SCSS。<br>Less：2009年出现，受 SASS 的影响较大，但又使用 CSS 的语法，让大部分开发者和设计师更容易上手，在 Ruby 社区之外支持者远超过 SASS，其缺点是比起 SASS 来，可编程功能不够，不过优点是简单和兼容 CSS，反过来也影响了 SASS 演变到了 SCSS 的时代，著名的 Twitter Bootstrap 就是采用 LESS 做底层语言的。<br>Stylus：Stylus 是一个CSS的预处理框架，2010 年产生，来自 Node.js 社区，主要用来给 Node 项目进行 CSS 预处理支持，所以 Stylus 是一种新型语言，可以创建健壮的、动态的、富有表现力的 CSS。比较年轻，其本质上做的事情与 SASS/LESS 等类似，<br>优点<br>虽然各种预处理器功能强大，但使用最多的，还是以下特性：变量（variables），代码混合（ mixins），嵌套（nested rules）以及 代码模块化(Modules)。</p>
+<p>接下来以 Sass 为例，展示一下这几个主要特性在预处理器中的实现：</p>
+<p>Variables and Operators (+, -, *, /, %)<br>$font-size: 10px;<br>$font-family: Helvetica, sans-serif;</p>
+<p>body {<br>  font: $font-size $font-family;<br>}</p>
+<p>.mark{<br>  font-size: 1.5 * $font-size;<br>}<br>Mixins<br>@mixin clearfix {<br>  &amp;:after {<br>    display: block;<br>    content: ‘’;<br>    clear: both;<br>  }<br>}<br>.sidebar{<br>  @include clearfix;<br>}<br>Nesting<br>// menu<br>.nav {</p>
+<blockquote>
+<p>li {<br>a:hover {<br>      background-color: red;<br>    }<br>  }<br>}<br>Modules<br>@import ‘./common’;<br>@import ‘./github-markdown’;<br>@import ‘./mixin’;<br>@import ‘./variables’;<br>缺点或不足<br>额外的编译配置<br>在写样式前需要做一些额外的编译配置工作，sass-node 安装以及编译的配置就能卡住一批前端新手。<br>img</p>
+</blockquote>
+<p>编译成本<br>每次修改代码都需要重新编译,占用时间和 CPU。<br>img</p>
+<p>学习成本<br>不同的 CSS 预处理器语法不同，增加学习成本。在同一个团队甚至项目里，可能同时使用了好几种样式预处理器。</p>
+<p>// Sass<br>$color: #f00;<br>$images: “../img”;<br>@mixin clearfix {<br>  &amp;:after {<br>    content: “ “;<br>    display: block;<br>    clear: both;<br>  }<br>}<br>body {<br>  color: $color;<br>  background: url(“#{img}/1.png”);<br>  @include clearfix;<br>}<br>// Less<br>@color: #f00;<br>@images: “../img”;<br>.clearfix() {<br>  &amp;:after {<br>    content: “ “;<br>    display: block;<br>    clear: both;<br>  }<br>}<br>body {<br>  color: @color;<br>  background: url(“@{img}/1.png”);<br>  .clearfix;<br>}<br>调试<br>在使用 CSS 预处理器时，我们通常会配置 SourceMap 来辅助调试，但即使这样，还是会碰到一些调试困难的情况：</p>
+<p>img</p>
+<p>回归 CSS<br>各种 CSS 预处理器在更新迭代的过程中，功能越来越繁杂花哨，但是绝大部分人用到的核心功能还是那几样：Variables、Mixing、Nested、Module，顶多再加上一些工具类函数。</p>
+<p>我们既想要想要预处理器的优点，又不想要它带来的成本和缺点，有没有两全其美的办法？CSS 这么多年一直也在从社区汲取养分加速进化和迭代，我们能不能从 CSS 标准里面找到答案呢？</p>
+<p>Variables in CSS<br>CSS 自定义属性（CSS Custom Properties)，又叫 CSS 变量（CSS Variable）,允许你自己在样式中声明变量，并通过 var() 函数使用。</p>
+<p>CSS Custom Properties for Cascading Variables 规范在 2012 年 10 月首次作为 工作草案（WD） 提出，并在 2015 年 10 月到达 候选人推荐标准（CR）阶段。现在浏览器支持程度已经接近 93%。</p>
+<p>img</p>
+<p>CSS 变量定义及使用如下所示，可定义的类型极其丰富。</p>
+<p>/* declaration <em>/<br>–VAR_NAME: <declaration-value>;<br>/</declaration-value></em> usage */<br>var(–VAR_NAME)</p>
+<p>/* root element selector (global scope), e.g. <html> <em>/<br>:root {<br>  /</em> CSS variables declarations */<br>  –main-color: #ff00ff;<br>  –main-bg: rgb(200, 255, 255);<br>  –logo-border-color: rebeccapurple;</html></p>
+<p>  –header-height: 68px;<br>  –content-padding: 10px 20px;</p>
+<p>  –base-line-height: 1.428571429;<br>  –transition-duration: .35s;<br>  –external-link: “external link”;<br>  –margin-top: calc(2vh + 20px);<br>}</p>
+<p>body {<br>  /* use the variable */<br>  color: var(–main-color);<br>}<br>不同于 SASS 预处理器变量的编译时处理，CSS 变量是浏览器在运行时进行处理的，因此 CSS 变量会更加强大和灵活。</p>
+<p>Operators<br>可以使用 calc() 进行计算</p>
+<p>:root {<br>  –block-font-size: 1rem;<br>}</p>
+<p>.block__highlight {<br>  /* WORKS <em>/<br>  font-size: calc(var(–block-font-size)</em>1.5);<br>}<br>Generate Colors<br>可以用于通过 RGB 等函数生成和计算颜色：Generate Colors</p>
+<p>img</p>
+<p>CSS to JS<br>CSS 变量出现前，从 CSS 传值给 JS 非常困难，甚至需要借助一些 Hack 的手法。现在使用 CSS 变量，你可以直接通过 JS 获取变量值并进行修改：</p>
+<p>.breakpoints-data {<br>  –phone: 480px;<br>  –tablet: 800px;<br>}<br>const breakpointsData = document.querySelector(‘.breakpoints-data’);</p>
+<p>// GET<br>const phone = getComputedStyle(breakpointsData)<br>    .getPropertyValue(‘–phone’);</p>
+<p>// SET<br>breakpointsData.style<br>    .setProperty(‘–phone’, ‘custom’);<br>Custom Theme<br>使用 CSS 变量，定制和动态切换网站主题非常简单方便：</p>
+<p>首先定义好不同主题下的变量，然后正常书写样式即可。</p>
+<p>html {<br>  –hue: 210; /* Blue */<br>  –text-color-normal: hsl(var(–hue), 77%, 17%);<br>  …<br>}<br>html[data-theme=’dark’] {<br>  –text-color-normal: hsl(var(–hue), 10%, 62%);<br>  …<br>}<br>通过 JS 改变元素属性，动态切换主题：</p>
+<p>document.documentElement.setAttribute(‘data-theme’, ‘dark’)<br>document.documentElement.setAttribute(‘data-theme’, ‘light’)<br>img</p>
+<p>更多高级用法可以参考：CSS custom properties (native variables) In-Depth</p>
+<p>为什么变量的定义以 –开头？原因在这里：Let’s Talk about CSS Variables</p>
+<p>Mixins in CSS<br>CSS 的有一个提案：CSS @apply Rule，按照该草案描述，用户可直接使用 CSS 变量存放声明块，然后通过 @apply rule 使用。</p>
+<p>:root {<br>    –pink-schema: {<br>        color: #6A8759;<br>        background-color: #F64778;<br>    }<br>}</p>
+<p>body{<br>  @apply –pink-schema;<br>}<br>可惜这个提案已被废弃，具体废弃原因感兴趣的可以看看这篇文章：Why I Abandoned @apply。</p>
+<p>尽管 Mixins 现在 CSS 还没有好的实现标准，但我们坚信迟早会有更优秀的规范涌现出来弥补 CSS 的这一块空白。</p>
+<p>Nesting in CSS<br>CSS 里已经有 Nesting 的规范出现，尽管现在只处于 Editor’s Draft 阶段：CSS Nesting Module Level 3</p>
+<p>可以看到按照 CSS Nesting Module ，Nesting 规范基本和预处理器一模一样。</p>
+<p>/* Dropdown menu on hover <em>/<br>ul {<br>  /</em> direct nesting (&amp; MUST be the first part of selector)*/<br>  &amp; &gt; li {<br>    color: #000;</p>
+<pre><code>&amp; &gt; ul { display: none; }
+
+&amp;:hover {
+  color: #f00;
+
+  &amp; &gt; ul { display: block; }
+}</code></pre><p>  }<br>}<br>Module in CSS<br>其实 CSS 很早就有了模块化方案，那就是 @import，使用 CSS 的 @import 规则，可以引用其他的文件样式。这个特性从 IE 5.5 开始就被所有的浏览器支持，那为什么一直以来使用者寥寥无几呢，原因很多：</p>
+<p>在一些老的浏览器有加载顺序的 bug<br>无法并行加载<br>导致过多的请求数量<br>……<br>不过现在大家的前端项目基本都会使用构建工具（Gulp、Webpack 等）打包后再上线，因此以上哪些缺点也就不存在了，而在 Webpack 的 css-loader 中，是可以配置是否开启 @import 的。</p>
+<p>img</p>
+<p>Selector Helpers<br>除了上面介绍的一些主要特性，CSS 还提供了一些全新的特性来帮助你更优雅的书写样式。</p>
+<p>:matches pseudo-class<br>已更名为 :is()</p>
+<p>:matches() CSS 伪类 函数将选择器列表作为参数，并选择该列表中任意一个选择器可以选择的元素，这对于以更紧凑的形式编写大型选择器非常有用，而且浏览器支持程度也已经接近 93%。</p>
+<p>/* 语法 <em>/<br>:matches( selector[, selector]</em> )</p>
+<p>.nav:matches(.side,.top) .links:matches(:hover, :focus) {<br>  color: #BADA55;<br>}</p>
+<p>/* 相当于以下代码 */<br>.nav.side .links:hover,<br>.nav.top  .links:hover,<br>.nav.side .links:focus,<br>.nav.top  .links:focus {<br>  color: #BADA55;<br>}<br>想要了解更多详情可以查看规范：Selectors Level 4</p>
+<p>@custom-selector<br>同时，你还可以您可以使用自定义选择器来定义可以匹配复杂选择器的别名。</p>
+<p>/* 语法 <em>/<br>@custom-selector: <custom-selector> <selector-list>;<br>/</selector-list></custom-selector></em> 定义的方式和 CSS 变量类似，使用起来稍微有点区别。 */</p>
+<p>@custom-selector :–text-inputs input[type=”text”],<br>input[type=”password”];</p>
+<p>:–text-inputs.disabled,<br>:–text-inputs[disabled] {<br>    opacity: 0.5<br>}</p>
+<p>/* 相当于以下代码 */<br>input[type=”text”].disabled,<br>input[type=”password”].disabled,<br>input[type=”text”][disabled],<br>input[type=”password”][disabled] {<br>    opacity: 0.5<br>}<br>使用起来<br>尽管上述的 CSS 特性还处于不同阶段，浏览器的支持程度也不尽相同，但是使用 postcss-preset-env，你就可以抢先尝试 CSS 的最新特性。</p>
+<p>当然，postcss-preset-env 的配置也十分简单，以 Webpack 为例：</p>
+<p>rules: [{<br>    test: /.css$/,<br>    use: [<br>        ‘style-loader’,<br>        { loader: ‘css-loader’, options: { importLoaders: 1 } },<br>        { loader: ‘postcss-loader’, options: {<br>            ident: ‘postcss’,<br>            plugins: () =&gt; [<br>                postcssPresetEnv(/* pluginOptions */)<br>            ]}<br>        }<br>    ]<br>}]<br>总结<br>经过一番梳理，我们发现，尽管 CSS 在社区的刺激下加快了更新迭代的速度，但是到目前为止，依然达不到 CSS 预处理器 VS CSS 的地步，只能说在使用 CSS 预处理器的同时，也可以在项目中尝试一些优秀的 CSS 新特性，即：CSS 预处理器 + CSS。</p>
+<p>但是我们依然坚信，在 W3C 的推动下，随着 CSS 自身不断完善，CSS 预处理器终究会像当年的 CoffeScript 、Jade 一样，变成时代的过渡产物。到那时候，大家也就不用纠结各种 CSS 预处理器的环境配置和技术选型等，直接打开编辑器，就能愉快的书写样式。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/10/25/react-hooks/" rel="prev" title="react-hooks">
+      <i class="fa fa-chevron-left"></i> react-hooks
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/12/18/json/" rel="next" title="通过需求学习JSON.stringify()">
+      通过需求学习JSON.stringify() <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="宋秋晓"
+      src="/images/head.png">
+  <p class="site-author-name" itemprop="name">宋秋晓</p>
+  <div class="site-description" itemprop="description">学习总结 思考感悟 知识管理</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">宋秋晓</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.6.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

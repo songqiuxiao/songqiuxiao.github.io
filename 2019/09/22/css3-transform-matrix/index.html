@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://songqiuxiao.github.io').hostname,
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="讲道理这个属性其实我很早就接触过了，但是只会最简单的几个方法，这次机缘巧合下，做了移动端的双指缩放功能，所以重新啃起来matrix属性。 当看到上面“Matrix(矩阵)”的时候，难免会心生畏惧（即使你已经学过），正常心理。实际上，这玩意确实有点复杂。 一般来说，CSS门槛低，无需程序基础或数学逻辑能力，也能做出点自我感觉不错的东西。然而，一般能轻松学到的东西，别人也都可以_(:з」∠)_。因此，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="css3-transform-matrix">
+<meta property="og:url" content="https:&#x2F;&#x2F;songqiuxiao.github.io&#x2F;2019&#x2F;09&#x2F;22&#x2F;css3-transform-matrix&#x2F;index.html">
+<meta property="og:site_name" content="宋秋晓">
+<meta property="og:description" content="讲道理这个属性其实我很早就接触过了，但是只会最简单的几个方法，这次机缘巧合下，做了移动端的双指缩放功能，所以重新啃起来matrix属性。 当看到上面“Matrix(矩阵)”的时候，难免会心生畏惧（即使你已经学过），正常心理。实际上，这玩意确实有点复杂。 一般来说，CSS门槛低，无需程序基础或数学逻辑能力，也能做出点自我感觉不错的东西。然而，一般能轻松学到的东西，别人也都可以_(:з」∠)_。因此，">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-09-22T15:56:20.000Z">
+<meta property="article:modified_time" content="2019-12-18T16:35:39.744Z">
+<meta property="article:author" content="宋秋晓">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://songqiuxiao.github.io/2019/09/22/css3-transform-matrix/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>css3-transform-matrix | 宋秋晓</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">宋秋晓</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">You are the JavaScript in my HTML</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://songqiuxiao.github.io/2019/09/22/css3-transform-matrix/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="宋秋晓">
+      <meta itemprop="description" content="学习总结 思考感悟 知识管理">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="宋秋晓">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          css3-transform-matrix
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-09-22 23:56:20" itemprop="dateCreated datePublished" datetime="2019-09-22T23:56:20+08:00">2019-09-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-19 00:35:39" itemprop="dateModified" datetime="2019-12-19T00:35:39+08:00">2019-12-19</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>讲道理这个属性其实我很早就接触过了，但是只会最简单的几个方法，这次机缘巧合下，做了移动端的双指缩放功能，所以重新啃起来matrix属性。</p>
+<p>当看到上面“Matrix(矩阵)”的时候，难免会心生畏惧（即使你已经学过），正常心理。实际上，这玩意确实有点复杂。</p>
+<p>一般来说，CSS门槛低，无需程序基础或数学逻辑能力，也能做出点自我感觉不错的东西。然而，一般能轻松学到的东西，别人也都可以_(:з」∠)_。因此，想要在css里面持续深耕，就要学到一般人学不到的深度，学到一般人学不了的东西。那么matrix是你的不二选择ヾ(◍°∇°◍)ﾉﾞ。</p>
+<a id="more"></a>
+<p>CSS3中的矩阵<br>img<br>回到正题，CSS3中的矩阵指的是一个方法，写为matrix()和matrix3d()，前者是元素2D平面的移动变换(transform)，后者则是3D变换。2D变换矩阵为3x3, 如上面矩阵示意图；3D变换则是4x4的矩阵。</p>
+<p>有些迷糊？恩，我也觉得上面讲述有些不合时宜。那好，我们先看看其他东西，层层渐进的讲讲transform属性。</p>
+<p>具体关于transform属性，稍微熟悉的人都知道（不熟悉的建议先补补课），transform中有这么几个属性方法：</p>
+<p>.trans_skew { transform: skew(35deg); } /* 斜拉 <em>/<br>.trans_scale { transform:scale(1, 0.5); } /</em> 缩放 <em>/<br>.trans_rotate { transform:rotate(45deg); } /</em> 旋转 <em>/<br>.trans_translate { transform:translate(10px, 20px); } /</em> 位移 */<br>斜拉(skew)，缩放(scale)，旋转(rotate)以及位移(translate)。</p>
+<p>那你有没有想过，为什么transform:rotate(45deg);会让元素旋转45°, 其后面运作的机理是什么呢？</p>
+<p>下面这张图可以解释上面的疑问：<br>img</p>
+<p>无论是旋转还是拉伸什么的，本质上都是应用的matrix()方法实现的（修改matrix()方法固定几个值），只是类似于transform:rotate这种表现形式，我们更容易理解，记忆与上手。</p>
+<p>换句话说，理解transform中matrix()矩阵方法有利于透彻理解CSS3的transform属性。</p>
+<p>OK，现在上面提到的CSS3矩阵解释应该说得通了。</p>
+<p>transform与坐标系统<br>用过transform旋转的人可以发现了，其默认是绕着中心点旋转的，而这个中心点就是transform-origin属性对应的点，也是所有矩阵计算的一个重要依据点。<br>img<br>当我们通过transform-origin属性进行设置的时候，矩阵相关计算也随之发生改变。反应到实际图形效果上就是，旋转拉伸的中心点变了！</p>
+<p>举例来说，如果设置：</p>
+<p>transform-origin: bottom left;<br>transform-origin: 50px 70px;<br>transform: rotate(45deg);<br>那么旋转时，旋转中心就会变成如上的设置。</p>
+<p>matrix写法<br>CSS3 transform的matrix()方法写法如下：</p>
+<p>transform: matrix(a,b,c,d,e,f);<br>蒙蔽了嘛，这么多参数。那，现在搬出我们大学学过的线性代数里的矩阵，╰(￣▽￣)╭ 当当当~</p>
+<p>实际上，这6个参数，对应的矩阵就是：（注意书写方向是竖着的。）<br>img<br>x, y表示转换元素的坐标（变量）。<br>img<br>那后面的ax+cy+e怎么来的呢？</p>
+<p>很简单，3x3矩阵每一行的第1个值与后面1x3的第1个值相乘，第2个值与第2个相乘，第3个与第3个，然后相加，如下图同色标注：<br>img<br>那ax+cy+e的意义是什么？<br>记住了，ax+cy+e为变换后的水平坐标，bx+dy+f表示变换后的垂直位置。</p>
+<p>又迷糊了？不急，一个简单例子就明白了。</p>
+<p>假设矩阵参数如下：</p>
+<p>transform: matrix(1, 0, 0, 1, 30, 30); /* a=1, b=0, c=0, d=1, e=30, f=30 */<br>现在，我们根据这个矩阵偏移元素的中心点，假设是(0, 0)，即x=0, y=0。</p>
+<p>于是，变换后的x’坐标就是ax+cy+e = 1<em>0+0</em>0+30=30, y’坐标就是bx+dy+f = 0<em>0+1</em>0+30=30.<br>img<br>于是，中心点坐标从(0,0)变成了→(30, 0)。对照上面有个(30,30)的白点图，好好想象下，原来(0,0)的位置，移到了白点的(30,30)处，怎么样，是不是往右下方同时偏移了30px哈！！</p>
+<p>所以实际上transform: matrix(1, 0, 0, 1, 30, 30);就等同于transform: translate(30px, 30px);。 注意：translate,rotate等方法都是需要单位的，而matrix方法e,f参数的单位可以省略。<br>戳这里看一个分解演示动画<br>聪明的你可能以及意识到了，matrix表现偏移就是：</p>
+<p>.wrapper{<br>  /* 只要关心后面两个参数就可以了 */<br>  transform: matrix(啊, 我是谁, 我在哪, 我在干什么, 水平偏移距离, 垂直偏移距离);<br>}<br>transform matrix矩阵与缩放，旋转以及拉伸<br>偏移是matrix效果中最简单，最容易理解的，因此，上面很详尽地对此进行展开说明。下面，为了进一步加深对matrix的理解，会简单讲下matrix矩阵与缩放，旋转以及拉伸效果。</p>
+<p>缩放(scale)<br>上面的偏移只要关心最后两个参数，这个缩放也是只要关心两个参数。哪两个呢？<br>如果你足够明察秋毫，应该已经知道了，因为上面多次出现的：transform: matrix(1, 0, 0, 1, 30, 30);已经出卖了。<br>发现没，matrix(1, 0, 0, 1, 30, 30);的元素比例与原来一样，1:1, 而这几个参数中，有两个1, 啊哈哈！没错，这两个1就是缩放相关的参数。<br>其中，第一个缩放x轴，第二个缩放y轴。</p>
+<p>用公式就很明白了，假设比例是s，则有matrix(s, 0, 0, s, 0, 0);，于是，套用公式，就有：</p>
+<p>x’ = ax+cy+e = s<em>x+0</em>y+0 = s<em>x;<br>y’ = bx+dy+f = 0</em>x+s<em>y+0 = s</em>y;<br>也就是上面那段，等同于scale(s, s);<br>好了，至此，无需多说了……</p>
+<p>旋转(rotate)<br>既然transform: rotate(θdeg);里面有提到角度，所以说旋转相比前面两个要更高级些，要用到可能勾起学生时代阴影的三角函数。</p>
+<p>方法以及参数使用如下（假设角度为θ）：<br>matrix(cosθ,sinθ,-sinθ,cosθ,0,0)<br>结合矩阵公式，就有：</p>
+<p>x’ = x<em>cosθ-y</em>sinθ+0 = x<em>cosθ-y</em>sinθ<br>y’ = x<em>sinθ+y</em>cosθ+0 = x<em>sinθ+y</em>cosθ<br>不过，说句老实话，就旋转而言，rotate(θdeg)这种书写形式要比matrix简单多了，首先记忆简单，其次，无需计算。例如，旋转30°，前者直接：<br>transform:rotate(30deg);<br>而使用matrix表示则还要计算cos, sin值：<br>transform: matrix(0.866025,0.500000,-0.500000,0.866025,0,0);</p>
+<p>拉伸(skew)<br>拉伸也用到了三角函数，不过是tanθ，而且只与b, c两个参数相关，书写如下（注意y轴倾斜角度在前）：</p>
+<p>matrix(1,tan(θy),tan(θx),1,0,0)<br>套用矩阵公式计算结果为：</p>
+<p>x’ = x+y<em>tan(θx)+0 = x+y</em>tan(θx)<br>y’ = x<em>tan(θy)+y+0 = x</em>tan(θy)+y<br>对应于skew(θx + “deg”, θy+ “deg”)这种写法。</p>
+<p>其中，θx表示x轴倾斜的角度，θy表示y轴，两者并无关联。</p>
+<p>matrix的作用<br>你可能会想问，既然有简单的skew, rotate..，那让人头大的matrix有何用？<br>即便是稍微复杂的双指缩放需求，也可能用transform-origin、rotate、translate拼拼凑凑出来合适的元素位移效果。<br>确实，对于一般地交互应用，transform属性默认提供的些方法是足够了，但是，一些其他的效果，如果transform属性没有提供接口方法，那你又该怎么办呢？比方说，“镜像对称效果”！<br>没辙了吧，这是，就只能靠matrix矩阵了。要知道，matrix矩阵是transform变换的基础，可以应付很多高端的效果，算是一种高级应用技巧吧。</p>
+<p>OK，这里就大概解释下，如何使用CSS3 transform matrix矩阵实现镜像效果。<br>img<br>因为该轴永远经过原点，因此，任意对称轴都可以用y = k * x表示。</p>
+<p>那这个martix如何得到的呢？啊，高中数学来了，就当再高考一次吧，如上图，已经y=kx，并且知道点(x, y)坐标，求其对称点(x’, y’)的坐标？</p>
+<p>一是垂直，二是中心点在轴线上，因此有：</p>
+<p>(y-y’) / (x - x’) = -1/ k → ky-ky’ = -x+x’<br>(x + x’) / 2 * k = (y + y’)/2 → kx+kx’ = y+y’<br>然后，把x’和y’提出来，就有：</p>
+<p>x’ = (1-k<em>k)/(k</em>k+1) <em>x + 2k/(k</em>k+1) <em>y;<br>y’ = 2k/(k</em>k+1) <em>x + (k</em>k-1)/(k*k+1) *y;<br>再结合矩阵公式：</p>
+<p>x’ = ax+cy+e;<br>y’ = bx+dy+f;<br>我们就可以得到：</p>
+<p>a = (1-k<em>k)/(k</em>k+1);<br>b = 2k/(k<em>k+1);<br>c = 2k/(k</em>k+1);<br>d = (k<em>k-1)/(k</em>k+1);<br>e = 0;<br>f = 0;<br>则matrix表示就是：</p>
+<p>transform: matrix((1-k<em>k)/(1+k</em>k), 2k/(1 + k<em>k), 2k/(1+k</em>k), (k<em>k-1)/(1+k</em>k), 0, 0)<br>关于matrix3d<br>3D变换虽然只比2D多了一个D，但是复杂程度不只多了一个。从二维到三维，在矩阵里头是从3x3变成4x4, 9到16了。<br>其实，本质上很多东西都与2D一致的，只是复杂度不一样而已。</p>
+<p>这里就只拿一个最简单的例子作为讲解，对于3D缩放效果，其矩阵如下：<br>img<br>代码表示就是：</p>
+<p>transform: matrix3d(sx, 0, 0, 0, 0, sy, 0, 0, 0, 0, sz, 0, 0, 0, 0, 1)<br>具体其他的属性，甚至是更复杂的效果，自己拿出本本算下公式什么的，也就一目了然啦</p>
+<p>…光研究2D的已经很头秃了，希望大家都不会遇到3D的需求叭(:з」∠)</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/12/18/hexo-localimg/" rel="prev" title="hexo-localimg">
+      <i class="fa fa-chevron-left"></i> hexo-localimg
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/10/11/web-components/" rel="next" title="web-components">
+      web-components <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="宋秋晓"
+      src="/images/head.png">
+  <p class="site-author-name" itemprop="name">宋秋晓</p>
+  <div class="site-description" itemprop="description">学习总结 思考感悟 知识管理</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">宋秋晓</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.6.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
