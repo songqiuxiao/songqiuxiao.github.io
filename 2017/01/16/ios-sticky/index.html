@@ -1,0 +1,837 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="css,js,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="这两天做的项目都是些面向高端人士的，所以基本不考虑兼容，代码也写的风生水起的。 不过期间还是遇到了些许问题，比如吸顶效果的实现，“吸顶”是一种比较老的交互方式，在PC页面已经用了很多年了。 吸顶元素的初始位置一般靠近页面顶部，但与顶部有一定距离，这块区域放的是最醒目的元素，比如我的页面就像下面这样：">
+<meta name="keywords" content="css,js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="有关sticky属性">
+<meta property="og:url" content="http://yoursite.com/2017/01/16/ios-sticky/index.html">
+<meta property="og:site_name" content="宋秋晓">
+<meta property="og:description" content="这两天做的项目都是些面向高端人士的，所以基本不考虑兼容，代码也写的风生水起的。 不过期间还是遇到了些许问题，比如吸顶效果的实现，“吸顶”是一种比较老的交互方式，在PC页面已经用了很多年了。 吸顶元素的初始位置一般靠近页面顶部，但与顶部有一定距离，这块区域放的是最醒目的元素，比如我的页面就像下面这样：">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2017/01/16/ios-sticky/1.png">
+<meta property="og:updated_time" content="2019-09-22T01:19:04.160Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="有关sticky属性">
+<meta name="twitter:description" content="这两天做的项目都是些面向高端人士的，所以基本不考虑兼容，代码也写的风生水起的。 不过期间还是遇到了些许问题，比如吸顶效果的实现，“吸顶”是一种比较老的交互方式，在PC页面已经用了很多年了。 吸顶元素的初始位置一般靠近页面顶部，但与顶部有一定距离，这块区域放的是最醒目的元素，比如我的页面就像下面这样：">
+<meta name="twitter:image" content="http://yoursite.com/2017/01/16/ios-sticky/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/01/16/ios-sticky/">
+
+
+
+
+
+  <title> 有关sticky属性 | 宋秋晓 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?c3d0612a69db33c593e6f49968135cc7";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">宋秋晓</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">You are the JavaScript in my HTML</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            目录
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/16/ios-sticky/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="宋秋晓's Blog">
+    <meta itemprop="description" content>
+    <meta itemprop="image" content="/uploads/head.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="宋秋晓">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="宋秋晓" src>
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                有关sticky属性
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-16T14:29:49+08:00">
+                2017-01-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/01/16/ios-sticky/" class="leancloud_visitors" data-flag-title="有关sticky属性">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这两天做的项目都是些面向高端人士的，所以基本不考虑兼容，代码也写的风生水起的。</p>
+<p>不过期间还是遇到了些许问题，比如吸顶效果的实现，“吸顶”是一种比较老的交互方式，在PC页面已经用了很多年了。</p>
+<p>吸顶元素的初始位置一般靠近页面顶部，但与顶部有一定距离，这块区域放的是最醒目的元素，比如我的页面就像下面这样：</p>
+<a id="more"></a>
+<p><img src="1.png" alt="img1"></p>
+<p>页面向下滚动超过吸顶元素初始位置时，把吸顶元素固定在顶部。。。</p>
+<p>要求吸顶的元素一般是二级导航栏、搜索框、文章标题栏（ h1 ）、表头（ thead ）、tab条等等，共同特点是在内容或功能上比较重要，但又不是最重要的元素（最重要的元素通常固定在页面顶部， navbar-fixed-top ）</p>
+<p>这种效果在pc端上靠<code>scroll</code>还是很容易实现的，其原理和”回到顶部”按钮是一样的~下面上代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> offsetTop;<span class="comment">//当前页面滚动的Y偏移值</span></span><br><span class="line"><span class="keyword">var</span> tabh = $(<span class="string">"#tab"</span>).offset().top;<span class="comment">//选项卡的Y偏移值</span></span><br><span class="line">$(<span class="built_in">window</span>).scroll( <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	offsetTop =$(<span class="built_in">document</span>).scrollTop();</span><br><span class="line">	<span class="keyword">if</span>(offsetTop &gt; tabh)&#123;</span><br><span class="line">	    $(<span class="string">"#tab"</span>).addClass(<span class="string">"top-fixed"</span>);</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">	    $(<span class="string">"#tab"</span>).removeClass(<span class="string">"top-fixed"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>但其实经常多次测试就会发现滚动到临界值<code>tabh</code>的时候页面会突然抖动(= =僵硬。。)我找了好久原因所在，最后发现是由于添加了top-fixed之后，原来的tabfixed出去了，下面的元素紧接着填满了原来的位置，所以才会抖动，那我们当然不想看见抖动啦，于是马上想到，那给加个占位符怎么样？</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> offsetTop;<span class="comment">//当前页面滚动的Y偏移值</span></span><br><span class="line"><span class="keyword">var</span> tabh = $(<span class="string">"#tab"</span>).offset().top;<span class="comment">//选项卡的Y偏移值</span></span><br><span class="line"><span class="comment">/*占位符*/</span></span><br><span class="line"><span class="keyword">var</span> stickyHolder = $(<span class="string">"&lt;div&gt;&lt;/div&gt;"</span>);</span><br><span class="line">stickyHolder.css(&#123;<span class="string">"width"</span>:<span class="string">"100%"</span>,<span class="string">"min-height"</span>:$(<span class="string">".tab"</span>).css(<span class="string">"height"</span>)&#125;);</span><br><span class="line">stickyHolder.append(<span class="string">"#tab"</span>);</span><br><span class="line"></span><br><span class="line">$(<span class="built_in">window</span>).scroll( <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	offsetTop =$(<span class="built_in">document</span>).scrollTop();</span><br><span class="line">	<span class="keyword">if</span>(offsetTop &gt; tabh)&#123;</span><br><span class="line">	    $(<span class="string">"#tab"</span>).addClass(<span class="string">"top-fixed"</span>);</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">	    $(<span class="string">"#tab"</span>).removeClass(<span class="string">"top-fixed"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>其实就是给<code>tab</code>即要吸顶的元素外层套上了个占位的外套，这样在内部<code>tab</code>fixed出去的时候，占位符还在原来的位置占位，页面当然就不抖抖抖啦。</p>
+<p>不过由于我的页面前面是个懒加载的banner图片，所以在页面滚动的时候<code>offsetTop</code>参数有可能不准确，没把图片高度算进去，可以配合加上占位图片，当然，用<code>min-height</code>也可以，更简单，之后等图片加载进来的时候重新修正<code>offsetTop</code>参数即可。</p>
+<p>前面讲了那么多，看起来已经无懈可击了。但是下面才是我真正要说的重点，上面的代码直接搬到移动端看似可行，Android 4.0+确实可以，但是我最近兼容的高版本IOS 8+完全行不通(其实ios基本全家阵亡)。</p>
+<h6 id="♥-Android的scroll事件"><a href="#♥-Android的scroll事件" class="headerlink" title="♥ Android的scroll事件"></a>♥ Android的<code>scroll</code>事件</h6><p>不那么实时（自带节流的感觉），但Android 4.1之后<code>scroll</code>件和PC几乎没什么区别。</p>
+<p>只要页面还在滚动，<code>scroll</code>事件就疯狂触发，需要手动节流，这正是我们需要的效果。如果<code>scroll</code>本身自带节流，就很容易错过临界点判断，导致吸顶元素“跳一下”，体验不平滑。</p>
+<h6 id="♥-IOS的scroll事件"><a href="#♥-IOS的scroll事件" class="headerlink" title="♥ IOS的scroll事件"></a>♥ IOS的<code>scroll</code>事件</h6><p>IOS 8-的Safari，包括<code>UIWebView</code>，对<code>scroll</code>事件做了很大限制：</p>
+<p>手指划动屏幕 -&gt; 滚动 -&gt; 手指抬起 -&gt; <mark>惯性滚动</mark> -&gt; 停止滚动<br>整个过程，直到停止滚动时才会触发1次<code>scroll</code>事件， 也就是说 ，IOS 8以下的<code>scroll</code>变成了<code>scrollend</code>。监听滚动判断位置的方法完全失效，平滑吸顶效果变成了滚过临界位置直到停止滚动时，吸顶元素跳到目标位置， 体验奇葩到我焦头烂额。。。</p>
+<p><code>scroll</code>不能用，但还可以有一些奇怪的思路，比如定时器读<code>scrollTop</code>， <code>touchmove</code> ， <code>iscroll</code> 等等</p>
+<p>定时器在手指没有离开屏幕时不会执行，<code>touchmove</code> 触发频率足够，也能拿到 <code>scrollTop</code> ，但 <code>touchend</code> 后， 惯性滚动期间 ，没有任何事件可用，拿不到这段的 <code>scrollTop</code> ，很难预测这段惯性滚动距离（减速运动），甚至不确定各IOS版本这段距离的计算方式是否相同</p>
+<p><code>iscroll</code> 这种假滚动，自然可以实时获取滚动位置， <code>iscroll</code> 还有一个专用版本来做这个事情：</p>
+<blockquote>
+<p>iscroll-probe.js, probing the current scroll position is a demanding task, that’s why I decided to build a dedicated version for it. If you need to know the scrolling position at any given time, this is the iScroll for you. (I’m making some more tests, this might end up in the regular iscroll.js script, so keep an eye on it).</p>
+</blockquote>
+<p>IOS 8+的Safari和<code>WKWebView</code> 能够疯狂触发 <code>scroll</code>，无论手指在不在屏幕上，无论是不是惯性滚动期间。但IOS 8+的 <code>UIWebView</code> ， <code>scroll</code> 限制还在，也就是我写的和ios端交互部分 吸顶效果 完全作废 TT A TT …</p>
+<p>总的来说，如果想在IOS端实现吸顶效果，此路不通，忘掉 <code>scroll</code>。</p>
+<h6 id="♥-sticky"><a href="#♥-sticky" class="headerlink" title="♥ sticky"></a>♥ sticky</h6><p>虽然 <code>scroll</code> 方案行不通，但IOS提供了另一种方式： <code>position: sticky</code> ，自IOS 6.1就支持了，最近<code>Chrome56</code>才支持。</p>
+<p>这个CSS规则专门负责吸顶，一般用法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">.sticky &#123;</span><br><span class="line">    <span class="comment">// 滚过初始位置时自动吸顶</span></span><br><span class="line">    position: -webkit-sticky;</span><br><span class="line">    position: sticky;</span><br><span class="line">    <span class="comment">// 吸顶时的定位</span></span><br><span class="line">    top: <span class="number">0</span>;</span><br><span class="line">    left: <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// z全局最高</span></span><br><span class="line">    z-index: <span class="number">9999</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>没有滚过初始位置时，和 <code>position: relative</code> 表现类似（占据空间， <code>!=static</code> 能为后代元素提供定位参照），但 <code>top</code> 和 <code>left</code> 无效。</p>
+<p>滚过初始位置时，和<code>position: fixed</code>表现类似，<code>top</code>和 <code>left</code>生效，固定在屏幕可见区域，但页面 不会抖动，原本占据的空间还在（自带守家占位符的感觉），吸顶效果非常平滑，比Android<code>scroll</code>方案体验更平滑，但限制很明显， 无法实时获知吸顶状态，于此相关的各种效果都受限制，比如我前面那个效果图，滚动到“我的首页”的时候给 “我的首页”加特殊样式，滚动到“我的论坛”的时候给 “我的论坛”加特殊样式…</p>
+<p>问题的关键就是IOS的<code>sticky</code>不由我们控制，且无法实时获知吸顶状态 ，想要获知吸顶状态的话，又回到了最初的问题，页面滚动过程中，怎样实时获知滚动条位置？CSS <code>sticky</code> 并 不能解决这个问题。</p>
+<p>我目前还没有找到合适的解决方案，目前方案是牺牲tab浏览状态独立性，多tab共用 body 的滚动条，切换tab时滚回之前的位置。这样做避免了判断吸顶状态，但牺牲了tab列表无缝切换的完美体验。</p>
+<h6 id="♥-总结：一般元素吸顶：Android用-scroll-方案，在效果可接受范围内手动节流，提升性能；IOS用CSS-sticky-，如果不需要兼容IOS-8-以及任意版本-UIWebView-的话，也可以采用-scroll-方案。"><a href="#♥-总结：一般元素吸顶：Android用-scroll-方案，在效果可接受范围内手动节流，提升性能；IOS用CSS-sticky-，如果不需要兼容IOS-8-以及任意版本-UIWebView-的话，也可以采用-scroll-方案。" class="headerlink" title="♥ 总结：一般元素吸顶：Android用 scroll 方案，在效果可接受范围内手动节流，提升性能；IOS用CSS sticky ，如果不需要兼容IOS 8-以及任意版本 UIWebView 的话，也可以采用 scroll 方案。"></a>♥ 总结：一般元素吸顶：Android用 <code>scroll</code> 方案，在效果可接受范围内手动节流，提升性能；IOS用CSS <code>sticky</code> ，如果不需要兼容IOS 8-以及任意版本 UIWebView 的话，也可以采用 <code>scroll</code> 方案。</h6><p>吸顶<code>tab</code>列表：没有好的解决方案，暂用牺牲无缝切换的方案。</p>
+<p>整页<code>iScroll</code>是一个冒险方案，页面复杂的话， 不要轻易尝试 ，即便页面不复杂，谁知道以后呢 = =毕竟我们的需求，永远都在改改改…</p>
+<p>如果大家有什么好的解决办法或思路请分享给我  (つд⊂)伤心…</p>
+<p>还有什么问题大家一起分享嗷嗷~联系方式就藏在博客哪篇文章里 (≧▽≦)/</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>感谢你请我吃糖果，我会继续努力哒<br>（〜^㉨^)〜！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/uploads/wx.png" alt="宋秋晓's Blog WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/uploads/zfb.png" alt="宋秋晓's Blog Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/css/" rel="tag"># css</a>
+          
+            <a href="/tags/js/" rel="tag"># js</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/16/javascript-intro/" rel="next" title="javascript-简介">
+                <i class="fa fa-chevron-left"></i> javascript-简介
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/18/anync-load-img/" rel="prev" title="关于 js&jq 判断图片是否加载完毕">
+                关于 js&jq 判断图片是否加载完毕 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/uploads/head.png" alt="宋秋晓's Blog">
+          <p class="site-author-name" itemprop="name">宋秋晓's Blog</p>
+          <p class="site-description motion-element" itemprop="description">学习总结 思考感悟 知识管理</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-6"><a class="nav-link" href="#♥-Android的scroll事件"><span class="nav-number">1.</span> <span class="nav-text">♥ Android的scroll事件</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#♥-IOS的scroll事件"><span class="nav-number">2.</span> <span class="nav-text">♥ IOS的scroll事件</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#♥-sticky"><span class="nav-number">3.</span> <span class="nav-text">♥ sticky</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#♥-总结：一般元素吸顶：Android用-scroll-方案，在效果可接受范围内手动节流，提升性能；IOS用CSS-sticky-，如果不需要兼容IOS-8-以及任意版本-UIWebView-的话，也可以采用-scroll-方案。"><span class="nav-number">4.</span> <span class="nav-text">♥ 总结：一般元素吸顶：Android用 scroll 方案，在效果可接受范围内手动节流，提升性能；IOS用CSS sticky ，如果不需要兼容IOS 8-以及任意版本 UIWebView 的话，也可以采用 scroll 方案。</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">宋秋晓's Blog</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid="></script>
+      <!-- UY END -->
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("qOE49oGzQD7djuXm7KwiVjvS-gzGzoHsz", "Cbqhv9Vco9HFs4ahc0dc9cRS");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+</body>
+</html>

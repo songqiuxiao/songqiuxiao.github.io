@@ -1,0 +1,936 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="css,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="随着前端工程化的不断完善，CSS 预处理器已经成为项目中不可缺少的部分，很多人在项目技术选型阶段就会先选择一个 CSS 预处理器，绝大部分前端工程的脚手架也内置了一系列的 CSS 预处理的模版，大家已经习惯了享受 CSS 预处理器带来的书写代码的灵活流畅，反而将原生的 CSS 冷落在一旁。 可能许多前端开发人员依然觉得 CSS 预处理器属于比较新的技术，其实不然，最早的 CSS 预处理器 Sass">
+<meta name="keywords" content="css">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于css预处理器">
+<meta property="og:url" content="http://yoursite.com/2019/11/19/css-preprocessor/index.html">
+<meta property="og:site_name" content="宋秋晓">
+<meta property="og:description" content="随着前端工程化的不断完善，CSS 预处理器已经成为项目中不可缺少的部分，很多人在项目技术选型阶段就会先选择一个 CSS 预处理器，绝大部分前端工程的脚手架也内置了一系列的 CSS 预处理的模版，大家已经习惯了享受 CSS 预处理器带来的书写代码的灵活流畅，反而将原生的 CSS 冷落在一旁。 可能许多前端开发人员依然觉得 CSS 预处理器属于比较新的技术，其实不然，最早的 CSS 预处理器 Sass">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/11/19/css-preprocessor/1.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/19/css-preprocessor/2.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/19/css-preprocessor/3.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/19/css-preprocessor/4.gif">
+<meta property="og:image" content="http://yoursite.com/2019/11/19/css-preprocessor/5.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/19/css-preprocessor/6.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/19/css-preprocessor/7.gif">
+<meta property="og:image" content="http://yoursite.com/2019/11/19/css-preprocessor/8.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/19/css-preprocessor/9.gif">
+<meta property="og:image" content="http://yoursite.com/2019/11/19/css-preprocessor/10.gif">
+<meta property="og:image" content="http://yoursite.com/2019/11/19/css-preprocessor/11.png">
+<meta property="og:updated_time" content="2019-11-21T13:02:38.119Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关于css预处理器">
+<meta name="twitter:description" content="随着前端工程化的不断完善，CSS 预处理器已经成为项目中不可缺少的部分，很多人在项目技术选型阶段就会先选择一个 CSS 预处理器，绝大部分前端工程的脚手架也内置了一系列的 CSS 预处理的模版，大家已经习惯了享受 CSS 预处理器带来的书写代码的灵活流畅，反而将原生的 CSS 冷落在一旁。 可能许多前端开发人员依然觉得 CSS 预处理器属于比较新的技术，其实不然，最早的 CSS 预处理器 Sass">
+<meta name="twitter:image" content="http://yoursite.com/2019/11/19/css-preprocessor/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/11/19/css-preprocessor/">
+
+
+
+
+
+  <title> 关于css预处理器 | 宋秋晓 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?c3d0612a69db33c593e6f49968135cc7";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">宋秋晓</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">You are the JavaScript in my HTML</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            目录
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/19/css-preprocessor/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="宋秋晓's Blog">
+    <meta itemprop="description" content>
+    <meta itemprop="image" content="/uploads/head.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="宋秋晓">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="宋秋晓" src>
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                关于css预处理器
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-11-19T10:22:51+08:00">
+                2019-11-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/2019/11/19/css-preprocessor/" class="leancloud_visitors" data-flag-title="关于css预处理器">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>随着前端工程化的不断完善，CSS 预处理器已经成为项目中不可缺少的部分，很多人在项目技术选型阶段就会先选择一个 CSS 预处理器，绝大部分前端工程的脚手架也内置了一系列的 CSS 预处理的模版，大家已经习惯了享受 CSS 预处理器带来的书写代码的灵活流畅，反而将原生的 CSS 冷落在一旁。</p>
+<p>可能许多前端开发人员依然觉得 CSS 预处理器属于比较新的技术，其实不然，最早的 CSS 预处理器 Sass 从 07 年诞生距今已有 12 年，相对较新的的 Stylus 也已发布 9 年了。</p>
+<p>前端的技术栈发展突飞猛进，W3C 的 CSS 工作组也一直在持续从社区汲取营养，加快 CSS 的迭代。那么到现在为止，CSS 是否可以取代 CSS 预处理器的地位？CSS 预处理器会不会成为 CSS 过渡时期的产物呢？</p>
+<a id="more"></a>
+<h2 id="W3C-介绍"><a href="#W3C-介绍" class="headerlink" title="W3C 介绍"></a>W3C 介绍</h2><p>CSS 是开放网络的核心语言之一，由 W3C 规范 实现跨浏览器的标准化。因此，在深入了解 CSS 规范更新进度之前，我们有必要先了解一下 W3C 及其规范制定流程。</p>
+<p>W3C 也就是万维网联盟（World Wide Web Consortium），又称 W3C 理事会，是万维网的主要国际标准组织。为半自治非政府组织（quasi-autonomous non-governmental organisation）。由 蒂姆·伯纳斯-李（Tim Berners-Lee）于 1994年10月 于麻省理工学院 MIT 计算机科学与人工智能实验室（MIT／LCS）创立。</p>
+<p>W3C 制定了一系列标准并督促网络应用开发者和内容提供者遵循这些标准。标准的内容包括使用语言的规范，开发中使用的导则和解释引擎的行为等等。W3C制定了包括 HTML、DOM、SVG、XML和 CSS 等的众多影响深远的标准规范。</p>
+<h2 id="W3C-规范制定流程"><a href="#W3C-规范制定流程" class="headerlink" title="W3C 规范制定流程"></a>W3C 规范制定流程</h2><p>因为接下来我们需要谈到一些不同阶段的 CSS 规范，因此这里有必要简单介绍一下 W3C 的规范制定流程。</p>
+<p>按照 W3C 的 Process Document，一个推荐标准的发展需要通过不同的阶段。</p>
+<p><img src="1.png" alt="img"></p>
+<p>其中几个主要的阶段分别为：</p>
+<ul>
+<li>WD 工作草案（Working draft）</li>
+<li>CR 候选推荐标准（Candidate recommendation）</li>
+<li>PR 提案推荐标准（recommendation）</li>
+<li>REC W3C推荐标准（W3C recommendation）<br>篇幅有限，这里就不详细展开讲解 W3C 的标准流程了，如果想了解更多关于 W3C 标准流程与组织架构 的信息，可以查看W3C标准流程与组织架构。</li>
+</ul>
+<h2 id="CSS-的历史"><a href="#CSS-的历史" class="headerlink" title="CSS 的历史"></a>CSS 的历史</h2><p>HTML 和 CSS 是那么密不可分，以至于你可能会觉得它们是一起出现的。实际上，自 1989 年 Tim Berners Lie 发明互联网后的多年中，这个世界上都不存在一个名为 CSS 的事物（更别说 CSS 预处理器了），Web 的原始版本根本就没有提供一种装饰网页的方法。</p>
+<p>HTML 规范虽然规定了网页中的标题、段落应该使用的标签，但是没有涉及这些内容应该以何种样式(比如大小、位置、间距、缩进等属性)呈现在浏览器中。</p>
+<p>不过，在随后仅短短10年后，CSS就被一个现代的 Web 社区全面采用，这期间的发生了一系列有趣的故事，有兴趣的可以看一下 A Look Back at the History of CSS。</p>
+<h3 id="CSS1"><a href="#CSS1" class="headerlink" title="CSS1"></a>CSS1</h3><p>于1994年，Håkon Wium Lie (哈肯·维姆·莱) 和 Bert Bos (伯特·波斯) 合作设计CSS。他们在1994年首次在芝加哥的一次会议上第一次展示了CSS的建议。</p>
+<p>1996年12月 发表的 CSS1 的要求有第一版主要规定了选择器、样式属性、伪类 、对象几个大的部分。</p>
+<h3 id="CSS2"><a href="#CSS2" class="headerlink" title="CSS2"></a>CSS2</h3><p>CSS2 在 1998 年 5月 由 W3C 发布，CSS2 规范是基于 CSS1 设计的，扩充和改进了很多更加强大的属性。包括选择器、位置模型、布局、表格样式、媒体类型、伪类、光标样式。</p>
+<p>Cascading Style Sheets Level 2 Revision 1，通常被称为“ CSS 2.1” ，修复了 CSS 2中的错误，删除了支持不良或不能完全互操作的特性，并为规范增加了已经实现的浏览器扩展。 为了遵守 W3C 标准化技术规范的过程，CSS 2.1 在 Working Draft (WD) 状态和 Candidate Recommendation (CP) 状态之间来回了很多年。</p>
+<p>CSS 2.1于 2004 年 2 月 25 日首次成为 Candidate Recommendation (CR)标准，但在 2005 年 6 月 13 日又回到 Working Draft (WD) 中进行进一步审查。 它于 2007 年 7 月 19 日回到 Candidate Recommendation (CP) 标准，然后在 2009 年更新了两次。 然而，由于作出了修改和澄清，它再次回到了2010年12月7日的 Last Call Working Draft 。</p>
+<h3 id="CSS3"><a href="#CSS3" class="headerlink" title="CSS3"></a>CSS3</h3><p>CSS3 是层叠样式表（Cascading Style Sheets）语言的最新版本，旨在扩展CSS2.1。</p>
+<p>CSS Level 2 经历了 9 年的时间（从 2002 年 8 月到 2011 年 6 月）才达到 Recommendation（推荐） 状态，主要原因是被一些次要特性拖了后腿。为了加快那些已经确认没有问题的特性的标准化速度，W3C 的 CSS Working Group 作出了一项被称为 Beijing doctrine 的决定，将 CSS 划分为许多小组件，称之为模块。这些模块彼此独立，按照各自的进度来进行标准化。其中一些已经是 W3C Recommendation 状态，也有一些仍是 Early Working Drafts（早期工作草案）。当新的需求被肯定后， 新的模块也会同样地添加进来。</p>
+<p><img src="2.png" alt="img"></p>
+<p>从形式上来说，CSS3 标准自身已经不存在了。每个模块都被独立的标准化，现在标准 CSS 包括了修订后的 CSS2.1 以及完整模块对它的扩充，模块的 level（级别）数并不一致。可以在每个时间点上为 CSS 标准定义一个 snapshots（快照），列出 CSS 2.1 和成熟的模块。</p>
+<p>W3C 会定期的发布这些 snapshots，如 2007, 2010, 2015 或 2017。</p>
+<p>目前为止，还没有 level 超过 3 的模块被标准化，未来应该会有所改变。 不过有些模块，比如 Selectors（选择器）4 或 CSS Borders and Backgrounds（边框和背景）Level 4 早已拥有了 Editor’s Draft（编辑草案），即使它们还没达到 First Published Working Draft（初次发布工作草案）状态。</p>
+<p>有一张图可以更加直观的表示当前 CSS3 Modules 的分类和状态：</p>
+<p><img src="3.png" alt="img"></p>
+<blockquote>
+<p>问题：为什么没有 CSS4？<br>    There is no single, integrated CSS4 specification, because it is split into separate “level 4” modules.<br>    Level 4 不等于 CSS 4 ，如 CSS Custom Properties for Cascading Variables Module Level 1 总不能说它是 CSS1 吧。</p>
+</blockquote>
+<h2 id="CSS-预处理器"><a href="#CSS-预处理器" class="headerlink" title="CSS 预处理器"></a>CSS 预处理器</h2><p>CSS 自诞生以来，基本语法和核心机制一直没有本质上的变化，在很长一段时间内，它的发展几乎全是表现力层面上的提升。</p>
+<p>最开始 CSS 在网页中的作用只是辅助性的装饰，轻便易学是最大的需求；然而如今网站的复杂度已经不可同日而语，原生 CSS 已经让开发者力不从心。</p>
+<p><img src="4.gif" alt="img"></p>
+<p>当一门语言的能力不足而用户的运行环境又不支持其它选择的时候，这门语言就会沦为 “编译目标” 语言。开发者将选择另一门更高级的语言来进行开发，然后编译到底层语言以便实际运行。于是，在前端领域，天降大任于斯人也，CSS 预处理器应运而生。</p>
+<h2 id="百花齐放"><a href="#百花齐放" class="headerlink" title="百花齐放"></a>百花齐放</h2><p>CSS 预处理器是一个能让你通过预处理器自己独有的语法来生成 CSS 的程序。</p>
+<p>市面上有很多 CSS 预处理器可供选择，且绝大多数 CSS 预处理器会增加一些原生 CSS 不具备或不完善的高级特性，这些特性让 CSS 的结构更加具有可读性且易于维护。当前社区代表的 CSS 预处理器 主要有一下几种：</p>
+<ul>
+<li>Sass：2007 年诞生，最早也是最成熟的 CSS 预处理器，拥有 Ruby 社区的支持和 Compass 这一最强大的 CSS 框架，目前受 LESS 影响，已经进化到了全面兼容 CSS 的 SCSS。</li>
+<li>Less：2009年出现，受 SASS 的影响较大，但又使用 CSS 的语法，让大部分开发者和设计师更容易上手，在 Ruby 社区之外支持者远超过 SASS，其缺点是比起 SASS 来，可编程功能不够，不过优点是简单和兼容 CSS，反过来也影响了 SASS 演变到了 SCSS 的时代，著名的 Twitter Bootstrap 就是采用 LESS 做底层语言的。</li>
+<li>Stylus：Stylus 是一个CSS的预处理框架，2010 年产生，来自 Node.js 社区，主要用来给 Node 项目进行 CSS 预处理支持，所以 Stylus 是一种新型语言，可以创建健壮的、动态的、富有表现力的 CSS。比较年轻，其本质上做的事情与 SASS/LESS 等类似，</li>
+</ul>
+<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><p>虽然各种预处理器功能强大，但使用最多的，还是以下特性：变量（variables），代码混合（ mixins），嵌套（nested rules）以及 代码模块化(Modules)。</p>
+<p>接下来以 Sass 为例，展示一下这几个主要特性在预处理器中的实现：</p>
+<h4 id="Variables-and-Operators"><a href="#Variables-and-Operators" class="headerlink" title="Variables and Operators (+, -, *, /, %)"></a><code>Variables and Operators (+, -, *, /, %)</code></h4><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$font-size: 10px;</span><br><span class="line">$font-family: Helvetica, sans-serif;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">  <span class="attribute">font</span>: $font-size $font-family;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.mark</span>&#123;</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">1.5</span> * $font-size;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Mixins"><a href="#Mixins" class="headerlink" title="Mixins"></a><code>Mixins</code></h4><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">mixin</span> clearfix &#123;</span><br><span class="line">  &amp;<span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: block;</span><br><span class="line">    <span class="attribute">content</span>: <span class="string">''</span>;</span><br><span class="line">    <span class="attribute">clear</span>: both;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.sidebar</span>&#123;</span><br><span class="line">  @include clearfix;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Nesting"><a href="#Nesting" class="headerlink" title="Nesting"></a><code>Nesting</code></h4><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// menu</span><br><span class="line"><span class="selector-class">.nav</span> &#123;</span><br><span class="line">  &gt; li &#123;</span><br><span class="line">    &gt; <span class="selector-tag">a</span><span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line">      <span class="attribute">background-color</span>: red;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Modules"><a href="#Modules" class="headerlink" title="Modules"></a><code>Modules</code></h4><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">import</span> <span class="string">'./common'</span>;</span><br><span class="line">@<span class="keyword">import</span> <span class="string">'./github-markdown'</span>;</span><br><span class="line">@<span class="keyword">import</span> <span class="string">'./mixin'</span>;</span><br><span class="line">@<span class="keyword">import</span> <span class="string">'./variables'</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="缺点或不足"><a href="#缺点或不足" class="headerlink" title="缺点或不足"></a>缺点或不足</h3><ul>
+<li>额外的编译配置<br>  在写样式前需要做一些额外的编译配置工作，sass-node 安装以及编译的配置就能卡住一批前端新手。</li>
+</ul>
+<p><img src="5.png" alt="img"></p>
+<ul>
+<li>编译成本<br>  每次修改代码都需要重新编译,占用时间和 CPU。</li>
+</ul>
+<p><img src="6.png" alt="img"></p>
+<h3 id="学习成本"><a href="#学习成本" class="headerlink" title="学习成本"></a>学习成本</h3><p>不同的 CSS 预处理器语法不同，增加学习成本。在同一个团队甚至项目里，可能同时使用了好几种样式预处理器。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// Sass</span><br><span class="line">$color: #f00;</span><br><span class="line">$images: "../img";</span><br><span class="line">@<span class="keyword">mixin</span> clearfix &#123;</span><br><span class="line">  &amp;<span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">    <span class="attribute">content</span>: <span class="string">" "</span>;</span><br><span class="line">    <span class="attribute">display</span>: block;</span><br><span class="line">    <span class="attribute">clear</span>: both;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: $color;</span><br><span class="line">  <span class="attribute">background</span>: <span class="built_in">url</span>(<span class="string">"#&#123;img&#125;/1.png"</span>);</span><br><span class="line">  @include clearfix;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// Less</span><br><span class="line">@color: #f00;</span><br><span class="line">@images: "../img";</span><br><span class="line"><span class="selector-class">.clearfix</span>() &#123;</span><br><span class="line">  &amp;:after &#123;</span><br><span class="line">    <span class="selector-tag">content</span>: " ";</span><br><span class="line">    <span class="selector-tag">display</span>: <span class="selector-tag">block</span>;</span><br><span class="line">    <span class="selector-tag">clear</span>: <span class="selector-tag">both</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: @color;</span><br><span class="line">  <span class="attribute">background</span>: <span class="built_in">url</span>(<span class="string">"@&#123;img&#125;/1.png"</span>);</span><br><span class="line">  .clearfix;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h3><p>在使用 CSS 预处理器时，我们通常会配置 SourceMap 来辅助调试，但即使这样，还是会碰到一些调试困难的情况：</p>
+<p><img src="7.gif" alt="img"></p>
+<h2 id="回归-CSS"><a href="#回归-CSS" class="headerlink" title="回归 CSS"></a>回归 CSS</h2><p>各种 CSS 预处理器在更新迭代的过程中，功能越来越繁杂花哨，但是绝大部分人用到的核心功能还是那几样：Variables、Mixing、Nested、Module，顶多再加上一些工具类函数。</p>
+<p>我们既想要想要预处理器的优点，又不想要它带来的成本和缺点，有没有两全其美的办法？CSS 这么多年一直也在从社区汲取养分加速进化和迭代，我们能不能从 CSS 标准里面找到答案呢？</p>
+<h3 id="Variables-in-CSS"><a href="#Variables-in-CSS" class="headerlink" title="Variables in CSS"></a><code>Variables in CSS</code></h3><p>CSS 自定义属性（CSS Custom Properties)，又叫 CSS 变量（CSS Variable）,允许你自己在样式中声明变量，并通过 var() 函数使用。</p>
+<p>CSS Custom Properties for Cascading Variables 规范在 2012 年 10 月首次作为 工作草案（WD） 提出，并在 2015 年 10 月到达 候选人推荐标准（CR）阶段。现在浏览器支持程度已经接近 93%。</p>
+<p><img src="8.png" alt="img"></p>
+<p>CSS 变量定义及使用如下所示，可定义的类型极其丰富。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* declaration */</span></span><br><span class="line"><span class="selector-tag">--VAR_NAME</span>: &lt;<span class="selector-tag">declaration-value</span>&gt;;</span><br><span class="line"><span class="comment">/* usage */</span></span><br><span class="line"><span class="selector-tag">var</span>(<span class="selector-tag">--VAR_NAME</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">/* root element selector (global scope), e.g. &lt;html&gt; */</span></span><br><span class="line"><span class="selector-pseudo">:root</span> &#123;</span><br><span class="line">  <span class="comment">/* CSS variables declarations */</span></span><br><span class="line">  <span class="attribute">--main-color</span>: <span class="number">#ff00ff</span>;</span><br><span class="line">  <span class="attribute">--main-bg</span>: <span class="built_in">rgb</span>(200, 255, 255);</span><br><span class="line">  <span class="attribute">--logo-border-color</span>: rebeccapurple;</span><br><span class="line"></span><br><span class="line">  <span class="attribute">--header-height</span>: <span class="number">68px</span>;</span><br><span class="line">  <span class="attribute">--content-padding</span>: <span class="number">10px</span> <span class="number">20px</span>;</span><br><span class="line"></span><br><span class="line">  <span class="attribute">--base-line-height</span>: <span class="number">1.428571429</span>;</span><br><span class="line">  <span class="attribute">--transition-duration</span>: .<span class="number">35s</span>;</span><br><span class="line">  <span class="attribute">--external-link</span>: <span class="string">"external link"</span>;</span><br><span class="line">  <span class="attribute">--margin-top</span>: <span class="built_in">calc</span>(2vh + 20px);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">  <span class="comment">/* use the variable */</span></span><br><span class="line">  <span class="attribute">color</span>: <span class="built_in">var</span>(--main-color);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>不同于 SASS 预处理器变量的编译时处理，CSS 变量是浏览器在运行时进行处理的，因此 CSS 变量会更加强大和灵活。</p>
+<h3 id="Operators"><a href="#Operators" class="headerlink" title="Operators"></a><code>Operators</code></h3><p>可以使用 calc() 进行计算</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-pseudo">:root</span> &#123;</span><br><span class="line">  <span class="attribute">--block-font-size</span>: <span class="number">1rem</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.block__highlight</span> &#123;</span><br><span class="line">  <span class="comment">/* WORKS */</span></span><br><span class="line">  <span class="attribute">font-size</span>: <span class="built_in">calc</span>(var(--block-font-size)*<span class="number">1.5</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Generate-Colors"><a href="#Generate-Colors" class="headerlink" title="Generate Colors"></a>Generate Colors</h3><p>可以用于通过 RGB 等函数生成和计算颜色：Generate Colors</p>
+<p><img src="9.gif" alt="img"></p>
+<h3 id="CSS-to-JS"><a href="#CSS-to-JS" class="headerlink" title="CSS to JS"></a>CSS to JS</h3><p>CSS 变量出现前，从 CSS 传值给 JS 非常困难，甚至需要借助一些 Hack 的手法。现在使用 CSS 变量，你可以直接通过 JS 获取变量值并进行修改：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.breakpoints-data</span> &#123;</span><br><span class="line">  <span class="attribute">--phone</span>: <span class="number">480px</span>;</span><br><span class="line">  <span class="attribute">--tablet</span>: <span class="number">800px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> breakpointsData = <span class="built_in">document</span>.querySelector(<span class="string">'.breakpoints-data'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// GET</span></span><br><span class="line"><span class="keyword">const</span> phone = getComputedStyle(breakpointsData)</span><br><span class="line">    .getPropertyValue(<span class="string">'--phone'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// SET</span></span><br><span class="line">breakpointsData.style</span><br><span class="line">    .setProperty(<span class="string">'--phone'</span>, <span class="string">'custom'</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="Custom-Theme"><a href="#Custom-Theme" class="headerlink" title="Custom Theme"></a>Custom Theme</h3><p>使用 CSS 变量，定制和动态切换网站主题非常简单方便：</p>
+<p>首先定义好不同主题下的变量，然后正常书写样式即可。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">html</span> &#123;</span><br><span class="line">  <span class="attribute">--hue</span>: <span class="number">210</span>; <span class="comment">/* Blue */</span></span><br><span class="line">  <span class="attribute">--text-color-normal</span>: <span class="built_in">hsl</span>(var(--hue), <span class="number">77%</span>, <span class="number">17%</span>);</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">html</span><span class="selector-attr">[data-theme='dark']</span> &#123;</span><br><span class="line">  <span class="attribute">--text-color-normal</span>: <span class="built_in">hsl</span>(var(--hue), <span class="number">10%</span>, <span class="number">62%</span>);</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过 JS 改变元素属性，动态切换主题：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.documentElement.setAttribute(<span class="string">'data-theme'</span>, <span class="string">'dark'</span>)</span><br><span class="line"><span class="built_in">document</span>.documentElement.setAttribute(<span class="string">'data-theme'</span>, <span class="string">'light'</span>)</span><br></pre></td></tr></table></figure>
+
+<p><img src="10.gif" alt="img"></p>
+<p>更多高级用法可以参考：CSS custom properties (native variables) In-Depth</p>
+<blockquote>
+<p>为什么变量的定义以 –开头？原因在这里：Let’s Talk about CSS Variables</p>
+</blockquote>
+<h3 id="Mixins-in-CSS"><a href="#Mixins-in-CSS" class="headerlink" title="Mixins in CSS"></a>Mixins in CSS</h3><p>CSS 的有一个提案：CSS @apply Rule，按照该草案描述，用户可直接使用 CSS 变量存放声明块，然后通过 @apply rule 使用。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-pseudo">:root</span> &#123;</span><br><span class="line">    <span class="attribute">--pink-schema</span>: &#123;</span><br><span class="line">        color: <span class="number">#6A8759</span>;</span><br><span class="line">        <span class="attribute">background-color</span>: <span class="number">#F64778</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">body</span>&#123;</span><br><span class="line">  @apply --pink-schema;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可惜这个提案已被废弃，具体废弃原因感兴趣的可以看看这篇文章：Why I Abandoned @apply。</p>
+<p>尽管 Mixins 现在 CSS 还没有好的实现标准，但我们坚信迟早会有更优秀的规范涌现出来弥补 CSS 的这一块空白。</p>
+<h3 id="Nesting-in-CSS"><a href="#Nesting-in-CSS" class="headerlink" title="Nesting in CSS"></a>Nesting in CSS</h3><p>CSS 里已经有 Nesting 的规范出现，尽管现在只处于 Editor’s Draft 阶段：CSS Nesting Module Level 3</p>
+<p>可以看到按照 CSS Nesting Module ，Nesting 规范基本和预处理器一模一样。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Dropdown menu on hover */</span></span><br><span class="line"><span class="selector-tag">ul</span> &#123;</span><br><span class="line">  <span class="comment">/* direct nesting (&amp; MUST be the first part of selector)*/</span></span><br><span class="line">  &amp; &gt; li &#123;</span><br><span class="line">    <span class="selector-tag">color</span>: <span class="selector-id">#000</span>;</span><br><span class="line"></span><br><span class="line">    &amp; &gt; <span class="selector-tag">ul</span> &#123; <span class="attribute">display</span>: none; &#125;</span><br><span class="line"></span><br><span class="line">    &amp;<span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line">      <span class="attribute">color</span>: <span class="number">#f00</span>;</span><br><span class="line"></span><br><span class="line">      &amp; &gt; ul &#123; display: block; &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Module-in-CSS"><a href="#Module-in-CSS" class="headerlink" title="Module in CSS"></a>Module in CSS</h3><p>其实 CSS 很早就有了模块化方案，那就是 @import，使用 CSS 的 @import 规则，可以引用其他的文件样式。这个特性从 IE 5.5 开始就被所有的浏览器支持，那为什么一直以来使用者寥寥无几呢，原因很多：</p>
+<p>在一些老的浏览器有加载顺序的 bug<br>无法并行加载<br>导致过多的请求数量<br>……<br>不过现在大家的前端项目基本都会使用构建工具（Gulp、Webpack 等）打包后再上线，因此以上哪些缺点也就不存在了，而在 Webpack 的 css-loader 中，是可以配置是否开启 @import 的。</p>
+<p><img src="11.png" alt="img"></p>
+<h3 id="Selector-Helpers"><a href="#Selector-Helpers" class="headerlink" title="Selector Helpers"></a>Selector Helpers</h3><p>除了上面介绍的一些主要特性，CSS 还提供了一些全新的特性来帮助你更优雅的书写样式。</p>
+<h4 id="matches-pseudo-class"><a href="#matches-pseudo-class" class="headerlink" title=":matches pseudo-class"></a><code>:matches pseudo-class</code></h4><p>已更名为 :is()</p>
+<p>:matches() CSS 伪类 函数将选择器列表作为参数，并选择该列表中任意一个选择器可以选择的元素，这对于以更紧凑的形式编写大型选择器非常有用，而且浏览器支持程度也已经接近 93%。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 语法 */</span></span><br><span class="line"><span class="selector-pseudo">:matches(</span> <span class="selector-tag">selector</span><span class="selector-attr">[, selector]</span>* )</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.nav</span><span class="selector-pseudo">:matches(.side</span>,<span class="selector-class">.top</span>) <span class="selector-class">.links</span><span class="selector-pseudo">:matches(</span><span class="selector-pseudo">:hover</span>, <span class="selector-pseudo">:focus)</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#BADA55</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 相当于以下代码 */</span></span><br><span class="line"><span class="selector-class">.nav</span><span class="selector-class">.side</span> <span class="selector-class">.links</span><span class="selector-pseudo">:hover</span>,</span><br><span class="line"><span class="selector-class">.nav</span><span class="selector-class">.top</span>  <span class="selector-class">.links</span><span class="selector-pseudo">:hover</span>,</span><br><span class="line"><span class="selector-class">.nav</span><span class="selector-class">.side</span> <span class="selector-class">.links</span><span class="selector-pseudo">:focus</span>,</span><br><span class="line"><span class="selector-class">.nav</span><span class="selector-class">.top</span>  <span class="selector-class">.links</span><span class="selector-pseudo">:focus</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#BADA55</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>想要了解更多详情可以查看规范：Selectors Level 4</p>
+<h4 id="custom-selector"><a href="#custom-selector" class="headerlink" title="@custom-selector"></a><code>@custom-selector</code></h4><p>同时，你还可以您可以使用自定义选择器来定义可以匹配复杂选择器的别名。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 语法 */</span></span><br><span class="line">@custom-selector: &lt;custom-selector&gt; &lt;selector-list&gt;;</span><br><span class="line"><span class="comment">/* 定义的方式和 CSS 变量类似，使用起来稍微有点区别。 */</span></span><br><span class="line"></span><br><span class="line">@<span class="keyword">custom</span>-<span class="keyword">selector</span> :--text-inputs input[type=<span class="string">"text"</span>],</span><br><span class="line">input[type=<span class="string">"password"</span>];</span><br><span class="line"></span><br><span class="line"><span class="selector-pseudo">:--text-inputs.disabled</span>,</span><br><span class="line"><span class="selector-pseudo">:--text-inputs</span><span class="selector-attr">[disabled]</span> &#123;</span><br><span class="line">    <span class="attribute">opacity</span>: <span class="number">0.5</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 相当于以下代码 */</span></span><br><span class="line"><span class="selector-tag">input</span><span class="selector-attr">[type="text"]</span><span class="selector-class">.disabled</span>,</span><br><span class="line"><span class="selector-tag">input</span><span class="selector-attr">[type="password"]</span><span class="selector-class">.disabled</span>,</span><br><span class="line"><span class="selector-tag">input</span><span class="selector-attr">[type="text"]</span><span class="selector-attr">[disabled]</span>,</span><br><span class="line"><span class="selector-tag">input</span><span class="selector-attr">[type="password"]</span><span class="selector-attr">[disabled]</span> &#123;</span><br><span class="line">    <span class="attribute">opacity</span>: <span class="number">0.5</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用起来"><a href="#使用起来" class="headerlink" title="使用起来"></a>使用起来</h2><p>尽管上述的 CSS 特性还处于不同阶段，浏览器的支持程度也不尽相同，但是使用 postcss-preset-env，你就可以抢先尝试 CSS 的最新特性。</p>
+<p>当然，postcss-preset-env 的配置也十分简单，以 Webpack 为例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">rules: [&#123;</span><br><span class="line">    test: <span class="regexp">/\.css$/</span>,</span><br><span class="line">    use: [</span><br><span class="line">        <span class="string">'style-loader'</span>,</span><br><span class="line">        &#123; <span class="attr">loader</span>: <span class="string">'css-loader'</span>, <span class="attr">options</span>: &#123; <span class="attr">importLoaders</span>: <span class="number">1</span> &#125; &#125;,</span><br><span class="line">        &#123; <span class="attr">loader</span>: <span class="string">'postcss-loader'</span>, <span class="attr">options</span>: &#123;</span><br><span class="line">            ident: <span class="string">'postcss'</span>,</span><br><span class="line">            plugins: <span class="function"><span class="params">()</span> =&gt;</span> [</span><br><span class="line">                postcssPresetEnv(<span class="comment">/* pluginOptions */</span>)</span><br><span class="line">            ]&#125;</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;]</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>经过一番梳理，我们发现，尽管 CSS 在社区的刺激下加快了更新迭代的速度，但是到目前为止，依然达不到 CSS 预处理器 VS CSS 的地步，只能说在使用 CSS 预处理器的同时，也可以在项目中尝试一些优秀的 CSS 新特性，即：CSS 预处理器 + CSS。</p>
+<p>但是我们依然坚信，在 W3C 的推动下，随着 CSS 自身不断完善，CSS 预处理器终究会像当年的 CoffeScript 、Jade 一样，变成时代的过渡产物。到那时候，大家也就不用纠结各种 CSS 预处理器的环境配置和技术选型等，直接打开编辑器，就能愉快的书写样式。</p>
+<!-- 参考
+You might not need a CSS preprocessor
+CSS3 Modules and the standardization process
+How to Read W3C Specs
+Wikipedia - Cascading Style Sheets
+CSS Custom Properties for Cascading Variables Module Level 1 -->
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>感谢你请我吃糖果，我会继续努力哒<br>（〜^㉨^)〜！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/uploads/wx.png" alt="宋秋晓's Blog WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/uploads/zfb.png" alt="宋秋晓's Blog Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/css/" rel="tag"># css</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/11/06/scale-drag-element/" rel="next" title="双指缩放+拖拽 局部元素">
+                <i class="fa fa-chevron-left"></i> 双指缩放+拖拽 局部元素
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/uploads/head.png" alt="宋秋晓's Blog">
+          <p class="site-author-name" itemprop="name">宋秋晓's Blog</p>
+          <p class="site-description motion-element" itemprop="description">学习总结 思考感悟 知识管理</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#W3C-介绍"><span class="nav-number">1.</span> <span class="nav-text">W3C 介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#W3C-规范制定流程"><span class="nav-number">2.</span> <span class="nav-text">W3C 规范制定流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS-的历史"><span class="nav-number">3.</span> <span class="nav-text">CSS 的历史</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CSS1"><span class="nav-number">3.1.</span> <span class="nav-text">CSS1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSS2"><span class="nav-number">3.2.</span> <span class="nav-text">CSS2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSS3"><span class="nav-number">3.3.</span> <span class="nav-text">CSS3</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS-预处理器"><span class="nav-number">4.</span> <span class="nav-text">CSS 预处理器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#百花齐放"><span class="nav-number">5.</span> <span class="nav-text">百花齐放</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#优点"><span class="nav-number">5.1.</span> <span class="nav-text">优点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Variables-and-Operators"><span class="nav-number">5.1.1.</span> <span class="nav-text">Variables and Operators (+, -, *, /, %)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Mixins"><span class="nav-number">5.1.2.</span> <span class="nav-text">Mixins</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Nesting"><span class="nav-number">5.1.3.</span> <span class="nav-text">Nesting</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Modules"><span class="nav-number">5.1.4.</span> <span class="nav-text">Modules</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缺点或不足"><span class="nav-number">5.2.</span> <span class="nav-text">缺点或不足</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#学习成本"><span class="nav-number">5.3.</span> <span class="nav-text">学习成本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#调试"><span class="nav-number">5.4.</span> <span class="nav-text">调试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#回归-CSS"><span class="nav-number">6.</span> <span class="nav-text">回归 CSS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Variables-in-CSS"><span class="nav-number">6.1.</span> <span class="nav-text">Variables in CSS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Operators"><span class="nav-number">6.2.</span> <span class="nav-text">Operators</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-Colors"><span class="nav-number">6.3.</span> <span class="nav-text">Generate Colors</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSS-to-JS"><span class="nav-number">6.4.</span> <span class="nav-text">CSS to JS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Custom-Theme"><span class="nav-number">6.5.</span> <span class="nav-text">Custom Theme</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mixins-in-CSS"><span class="nav-number">6.6.</span> <span class="nav-text">Mixins in CSS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Nesting-in-CSS"><span class="nav-number">6.7.</span> <span class="nav-text">Nesting in CSS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Module-in-CSS"><span class="nav-number">6.8.</span> <span class="nav-text">Module in CSS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Selector-Helpers"><span class="nav-number">6.9.</span> <span class="nav-text">Selector Helpers</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#matches-pseudo-class"><span class="nav-number">6.9.1.</span> <span class="nav-text">:matches pseudo-class</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#custom-selector"><span class="nav-number">6.9.2.</span> <span class="nav-text">@custom-selector</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用起来"><span class="nav-number">7.</span> <span class="nav-text">使用起来</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">8.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">宋秋晓's Blog</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid="></script>
+      <!-- UY END -->
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("qOE49oGzQD7djuXm7KwiVjvS-gzGzoHsz", "Cbqhv9Vco9HFs4ahc0dc9cRS");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+</body>
+</html>
