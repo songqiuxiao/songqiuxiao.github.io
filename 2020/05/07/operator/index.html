@@ -57,7 +57,7 @@
 <meta property="og:image" content="https:&#x2F;&#x2F;songqiuxiao.github.io&#x2F;2020&#x2F;05&#x2F;07&#x2F;operator&#x2F;2.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;songqiuxiao.github.io&#x2F;2020&#x2F;05&#x2F;07&#x2F;operator&#x2F;3.png">
 <meta property="article:published_time" content="2020-05-07T09:10:32.000Z">
-<meta property="article:modified_time" content="2020-05-18T15:30:12.969Z">
+<meta property="article:modified_time" content="2020-05-18T17:28:17.010Z">
 <meta property="article:author" content="宋秋晓">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;songqiuxiao.github.io&#x2F;2020&#x2F;05&#x2F;07&#x2F;operator&#x2F;1.png">
@@ -209,7 +209,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-18 23:30:12" itemprop="dateModified" datetime="2020-05-18T23:30:12+08:00">2020-05-18</time>
+                <time title="修改时间：2020-05-19 01:28:17" itemprop="dateModified" datetime="2020-05-19T01:28:17+08:00">2020-05-19</time>
               </span>
 
           
@@ -226,8 +226,8 @@
         <p>null &gt;= 0，你觉得这个答案是什么？</p>
 <a id="more"></a>
 
-<h3 id="null-gt-0-的答案"><a href="#null-gt-0-的答案" class="headerlink" title="null &gt;= 0 的答案"></a><code>null &gt;= 0</code> 的答案</h3><p>最近公司晚上直播网课『重学前端』，这里写一下感想。。。</p>
-<p>然后最近写需求遇到个问题，当 <code>count</code> 为 <code>null</code> 或者 <code>undefined</code> 的时候，界面展示<code>...</code>，而当 <code>count</code> 为 0 或大于 0 的数字时，展示 <code>count</code>，一个很简单的问题嘛，我的写法是 <code>count || count === 0</code>，看起来一切正常，自信的去 review，然后发现似乎可以替换为一个更简洁的写法<code>count &gt;= 0</code>，然后自测过程中，发现界面上的<code>...</code>不见了，排查了半天 bug，发现似乎是因为 count 为 null，而 null&gt;=0 这段代码导致的。<br>抱着不可置信的态度，我在浏览器输入<code>null &gt;= 0</code>，回车！</p>
+<h3 id="null-gt-0-的答案"><a href="#null-gt-0-的答案" class="headerlink" title="null &gt;= 0 的答案"></a><code>null &gt;= 0</code> 的答案</h3><p>最近公司晚上直播网课『重学前端』，发现有很多细碎的小知识都被遗忘在脑海的角落里了，比如说这篇博客想写的操作符。。。</p>
+<p>事情是这样的，写需求遇到个问题，当 <code>count</code> 为 <code>null</code> 或者 <code>undefined</code> 的时候，界面展示<code>...</code>，而当 <code>count</code> 为 0 或大于 0 的数字时，展示 <code>count</code>，一个很简单的问题嘛，我的写法是 <code>count || count === 0</code>，看起来一切正常，自信的去 review，然后发现似乎可以替换为一个更简洁的写法<code>count &gt;= 0</code>，然后自测过程中，发现界面上的<code>...</code>不见了，排查了半天 bug，发现似乎是因为 count 为 null，而 null&gt;=0 这段代码导致的。<br>抱着不可置信的态度，我在浏览器输入<code>null &gt;= 0</code>，回车！</p>
 <p><img src="/2020/05/07/operator/1.png" alt="img"></p>
 <p>😱😱😱 我当时是震惊的。。。小伙伴也是</p>
 <img style="max-width:700px" src="/2020/05/07/operator/2.png">
