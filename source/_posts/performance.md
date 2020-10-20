@@ -248,5 +248,6 @@ async 适用于不影响 DOM 或 CSSOM 的脚本，对一些跟我们的代码�
 
 ### 参考文献
 
+- [Get Started With Analyzing Runtime Performance](https://developers.google.com/web/tools/chrome-devtools/evaluate-performance)
 - [High Performance Browser Networking](https://hpbn.co/)
 - [core-web-vitals](https://web.dev/vitals/#core-web-vitals)
