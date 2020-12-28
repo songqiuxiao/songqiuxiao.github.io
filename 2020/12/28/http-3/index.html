@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"songqiuxiao.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="前段时间看浏览器性能优化的时候，对比多家网站，发现某大型网站的服务还在使用 HTTP&#x2F;1.1，没有使用 HTTP&#x2F;2 ，然后突然就好奇 HTTP&#x2F;3 怎么样了。。。就来挖一下 HTTP 的事情">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTTP&#x2F;3 快~来~了">
+<meta property="og:url" content="https:&#x2F;&#x2F;songqiuxiao.github.io&#x2F;2020&#x2F;12&#x2F;28&#x2F;http-3&#x2F;index.html">
+<meta property="og:site_name" content="宋秋晓">
+<meta property="og:description" content="前段时间看浏览器性能优化的时候，对比多家网站，发现某大型网站的服务还在使用 HTTP&#x2F;1.1，没有使用 HTTP&#x2F;2 ，然后突然就好奇 HTTP&#x2F;3 怎么样了。。。就来挖一下 HTTP 的事情">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https:&#x2F;&#x2F;songqiuxiao.github.io&#x2F;2020&#x2F;12&#x2F;28&#x2F;http-3&#x2F;1.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;songqiuxiao.github.io&#x2F;2020&#x2F;12&#x2F;28&#x2F;http-3&#x2F;8.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;songqiuxiao.github.io&#x2F;2020&#x2F;12&#x2F;28&#x2F;http-3&#x2F;9.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;songqiuxiao.github.io&#x2F;2020&#x2F;12&#x2F;28&#x2F;http-3&#x2F;2.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;songqiuxiao.github.io&#x2F;2020&#x2F;12&#x2F;28&#x2F;http-3&#x2F;3.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;songqiuxiao.github.io&#x2F;2020&#x2F;12&#x2F;28&#x2F;http-3&#x2F;4.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;songqiuxiao.github.io&#x2F;2020&#x2F;12&#x2F;28&#x2F;http-3&#x2F;5.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;songqiuxiao.github.io&#x2F;2020&#x2F;12&#x2F;28&#x2F;http-3&#x2F;6.gif">
+<meta property="og:image" content="https:&#x2F;&#x2F;songqiuxiao.github.io&#x2F;2020&#x2F;12&#x2F;28&#x2F;http-3&#x2F;7.png">
+<meta property="article:published_time" content="2020-12-28T15:11:16.000Z">
+<meta property="article:modified_time" content="2020-12-28T16:17:52.980Z">
+<meta property="article:author" content="宋秋晓">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;songqiuxiao.github.io&#x2F;2020&#x2F;12&#x2F;28&#x2F;http-3&#x2F;1.png">
+
+<link rel="canonical" href="https://songqiuxiao.github.io/2020/12/28/http-3/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>HTTP/3 快~来~了 | 宋秋晓</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">宋秋晓</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">You are the JavaScript in my HTML</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://songqiuxiao.github.io/2020/12/28/http-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="宋秋晓">
+      <meta itemprop="description" content="学习总结 思考感悟 知识管理">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="宋秋晓">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          HTTP/3 快~来~了
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-12-28 23:11:16" itemprop="dateCreated datePublished" datetime="2020-12-28T23:11:16+08:00">2020-12-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-29 00:17:52" itemprop="dateModified" datetime="2020-12-29T00:17:52+08:00">2020-12-29</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>前段时间看浏览器性能优化的时候，对比多家网站，发现某大型网站的服务还在使用 HTTP/1.1，没有使用 HTTP/2 ，然后突然就好奇 HTTP/3 怎么样了。。。就来挖一下 HTTP 的事情</p>
+<p><img src="/2020/12/28/http-3/1.png" alt="img"></p>
+<a id="more"></a>
+
+<p>然后就很感慨：</p>
+<p><strong>我们做的很多努力就是为了提升效率和安全</strong></p>
+<h4 id="很久以前"><a href="#很久以前" class="headerlink" title="很久以前"></a>很久以前</h4><p>谈未来之前，咱们先讲讲现实。你了解 HTTP 吗？这个定义于 1991 年的协议是用来管理 Web 的。它的全名是超文本传输 ​​ 协议，让你可以从网页中获取资源，网页数据从 Web 服务器传输到你的浏览器上。它基于较低级别的协议——TCP，这里是重点——而且它是无状态的。这意味着每个请求都是完全独立的。页面上显示的每个 GIF 图片都在互联网上独立存在，这对这些 GIF 图片本身来说是好事。但对我们来说，这样的一个系统是有些支离破碎的。</p>
+<p>问题在于每个请求一次只会查找一个文件。每次都要创建一个昂贵的 TCP 连接。想象一下，如果你的页面上有 10,000 个小技巧，这会是多么沉重的负担啊。</p>
+<p>为了更好地向大家解释互联网的协议机制，这里我找了个网上的图<br><img src="/2020/12/28/http-3/8.jpg" alt="img"><br>尽管浏览器可以同时发出六个不同的请求，但是 HTTP 仍然很慢，并且需要很多 TCP 连接。另外，我们开发人员通常不会在意这一点。我们喜欢在页面上塞满各种垃圾。比如说巨大的 jQuery 库，包含 300 个无用的 CSS 样式表，结尾是一个透明的 8 兆大 PNG 图。</p>
+<p>当谷歌发现我们在互联网上到处倾倒垃圾后，他们就开始搞一个称为 SPDY 的东西了。目的是什么呢？当然是加快互联网的速度。</p>
+<p>SPDY 是一个规范，建议继续使用 HTTP，但要更改一些规则。通过压缩标头、对请求进行优先级排序和多路复用，它将把所有 TCP 请求和连接变成单独的一个！</p>
+<p>具体来说，当你读取 HTML 时，浏览器会查看你在页面中要询问的所有内容。然后，它可以一次获取所有内容，这样就可以避免一个文件一个文件地获取了。</p>
+<p>HTTP2 的第一份草案基于 SPDY。HTTP2 很快被广泛采用，随后互联网上的一切变得快多了。今天，互联网上 42.7％的内容使用 HTTP2。<br><img src="/2020/12/28/http-3/9.jpg" alt="img"></p>
+<p>铺垫了这么久，我们再从头来讲，HTTP 标准和 HTML 标准一样古老，都是由互联网之父 Tim Berners-Lee 在 1989 年发起，然后经由 IEFT 发展起来。不过 HTTP 第一个被广泛应用的版本是 0.9 版本，对我们影响比较多的是 1.0 版本和后来的 1.1 版本，我记得国内有些门户网站在 2010 年之后还在用 HTTP/1.0。</p>
+<h4 id="HTTP-时间轴"><a href="#HTTP-时间轴" class="headerlink" title="HTTP 时间轴"></a>HTTP 时间轴</h4><ul>
+<li>1991, HTTP/0.9</li>
+<li>1996, HTTP/1.0</li>
+<li>1997, HTTP/1.1</li>
+<li>2009, SPDY</li>
+<li>2012, HTTP/2</li>
+<li>2018, HTTP/3</li>
+</ul>
+<p>我们从 HTTP/1.1 开始来说</p>
+<h4 id="HTTP-1-1"><a href="#HTTP-1-1" class="headerlink" title="HTTP/1.1"></a>HTTP/1.1</h4><p>HTTP/0.9 只支持 get 方法，然后 HTTP/1.0 定义了其它方法比如 post、put 等等，并且在通讯中指定版本以及请求头和响应头。当然这些还不够，所以在第二年，就又推出了 HTTP/1.1 版本，增加了很多特性：</p>
+<ul>
+<li>缓存机制</li>
+<li>增加长链接： keep-alive，并默认开启，这样就解决了每次请求完成之后就关闭造成的效率低下问题。</li>
+<li>分块传输：Transfer-Encoding:chunked</li>
+<li>pipelining：流水线或者称为通信管道复用。值得注意的是，HTTP/1.1 在 1997 年就制定了，还是在 2009 年开始大规模使用然后被广为人知，从而被大规模使用。</li>
+</ul>
+<p><img src="/2020/12/28/http-3/2.png" alt="img"></p>
+<h5 id="HTTP-1-1-的问题"><a href="#HTTP-1-1-的问题" class="headerlink" title="HTTP/1.1 的问题"></a>HTTP/1.1 的问题</h5><p>其实当时 HTTP 的效率已经「够用」了对吧？不是的，HTTP/1.1 当然不是完美的，有很多明显的问题：</p>
+<ul>
+<li>高延迟，队头阻塞带来的高延迟问题导致页面加载速度降低</li>
+<li>无状态特性，带来了巨大的 HTTP Header。比如，UA，Cookie，Accept，Server 等头部信息，可能会浪费几千字节的开销。而 Body 却可能只有几个字节。</li>
+<li>明文传输，不安全，一个是内容容易被监控，比如密码，被监控之后，就可能会被劫持（篡改）。</li>
+<li>不支持服务器推送。</li>
+</ul>
+<p>所以，HTTP/1.1 的负面特征很明显：慢和不安全。</p>
+<h5 id="HTTPS？"><a href="#HTTPS？" class="headerlink" title="HTTPS？"></a>HTTPS？</h5><p>安全问题当然是可以解决的，那就是使用 HTTPS。</p>
+<p>HTTPS 不是新的协议，它其实是在 HTTP 层和 TCP 层之间加入了安全层，使用 SSL/TLS 协议来进行数据传输的加解密操作。</p>
+<h5 id="简单复习一下-SSL-TLS："><a href="#简单复习一下-SSL-TLS：" class="headerlink" title="简单复习一下 SSL/TLS："></a>简单复习一下 SSL/TLS：</h5><ul>
+<li>1994 年，NetScape 公司设计了 SSL 协议（Secure Sockets Layer）的 1.0 版，但是未发布。</li>
+<li>1995 年，NetScape 公司发布 SSL 2.0 版，很快发现有严重漏洞。</li>
+<li>1996 年，SSL 3.0 版问世，得到大规模应用。</li>
+<li>1999 年，互联网标准化组织 IETF 接替 NetScape 公司，发布了 SSL 的升级版 TLS 1.0 版。</li>
+<li>2006 年，TLS 1.1 版。</li>
+<li>2008 年，TLS 1.2。</li>
+<li>2011 年，TLS 1.2 修订版 。</li>
+<li>2015 年，SSL 3.0 被中止支持。</li>
+<li>2018 年，TLS 1.3 发布，移除了 MD5、SHA1 和 RC4 的支持。</li>
+<li>2020 年，微软、Google、苹果、Mozilla 四家浏览器业者在 <strong>2020 年终止支持 TLS 1.0 及 1.1 版</strong>，新版的浏览器会警告页面不安全。</li>
+</ul>
+<p>再来复习一下 HTTPS 的传输流程：<br><img src="/2020/12/28/http-3/3.png" alt="img"><br>所以，使用了 HTTPS 的网站，访问起来更慢了！</p>
+<p>那能不能不用 HTTPS？</p>
+<p>当然不能啦。</p>
+<p>其实大家在 2014 年之前对网络传输的安全问题并不太重视，因为没有出过什么问题，最多就是遇到运营商缓存问题。</p>
+<p>嗯，没有遇到安全问题之前当然不会重视安全问题啦。</p>
+<p>然而在 2014 年之后，开始遇到各种令人发指的中国网络运营商劫持，当时各大互联网服务都被劫持过，刚开始劫持整个页面，后来劫持 js 文件，甚至某省的运营商将<a href="https://www.v2ex.com/t/284348" target="_blank" rel="noopener">公共 cdn 的 jquery 文件给劫持了</a>！</p>
+<p>所以说，运营商其实是推动了 HTTPS 的普及了。</p>
+<h4 id="HTTP-2"><a href="#HTTP-2" class="headerlink" title="HTTP/2"></a>HTTP/2</h4><p>那 Google 在发现了 HTTP 1.1 的弊端后，开始尝试解决。</p>
+<p>然后 Google 搞了 SPDY，然后 SPDY 被 IETF 在 2015 年标准化为 HTTP/2。</p>
+<p>这就是 Google 牛逼的地方：解决问题就是改变世界，某度也就搞个度娘娱乐一下。。。</p>
+<h5 id="HTTP-2-的特性："><a href="#HTTP-2-的特性：" class="headerlink" title="HTTP/2 的特性："></a>HTTP/2 的特性：</h5><ul>
+<li>请求头压缩</li>
+<li>多路复用</li>
+<li>二进制传输</li>
+</ul>
+<h6 id="HTTP-2-VS-HTTP-1-1："><a href="#HTTP-2-VS-HTTP-1-1：" class="headerlink" title="HTTP/2 VS HTTP/1.1："></a>HTTP/2 VS HTTP/1.1：</h6><p><img src="/2020/12/28/http-3/4.png" alt="img"><br>所以，HTTP/2 最直接的效果就是：快！</p>
+<p>有一个非常著名的 demo 展示 HTTP/2 有多快：<a href="https://http2.akamai.com/demo" target="_blank" rel="noopener">HTTP/2: the Future of the Internet | Akamai</a></p>
+<p><img src="/2020/12/28/http-3/5.png" alt="img"><br>到目前为止，全球有 49.7% 的网站使用了 HTTP/2。 via Usage Statistics of HTTP/2 for Websites, December 2020</p>
+<h5 id="HTTP-2-一定要加密么？"><a href="#HTTP-2-一定要加密么？" class="headerlink" title="HTTP/2 一定要加密么？"></a>HTTP/2 一定要加密么？</h5><p>是的</p>
+<p>IETF 工作组在是否强制加密上有很大的争议，并且最后并没有达成一致，也就是说标准并没有说必须要加密。。。</p>
+<p>不过大部分客户端实现的时候，让加密（HTTPS）成为事实上的标准了。</p>
+<h5 id="HTTP-2-的不足"><a href="#HTTP-2-的不足" class="headerlink" title="HTTP/2 的不足"></a>HTTP/2 的不足</h5><p>嗯。。。上面提到的 HTTP 1.1 的两个关键问题在 HTTP/2 中并没有得到解决：</p>
+<ul>
+<li>TLS 握手延时</li>
+<li>队头阻塞</li>
+</ul>
+<p>嗯，HTTP/2 主要解决了通道的效率问题，但还是不够快。</p>
+<h5 id="TLS-1-3"><a href="#TLS-1-3" class="headerlink" title="TLS 1.3"></a>TLS 1.3</h5><p>上面 HTTP/2 的不足中，TLS 的握手延迟，是没办法避免的，不过 TLS 1.3 带来了很大的变化（虽然目前使用的还不多）：</p>
+<ul>
+<li>快——TLS 1.2 及以下版本需要 2 次往返才能完成握手，也就是 2-RTT，而 TLS 1.3 可以做到 1-RTT 甚至 0-RTT</li>
+<li>更安全——废弃了 3DES、RC4、AES-CBC 等加密组件，废弃了 SHA1、MD5 等哈希算法。</li>
+</ul>
+<h4 id="HTTP-3"><a href="#HTTP-3" class="headerlink" title="HTTP/3"></a>HTTP/3</h4><p>然后牛逼的 Google 又折腾出了 QUIC 协议（Quick UDP Internet Connections，快速 UDP 网络连接），算是抛弃了 TCP 协议了。</p>
+<p>然后 IETF 接受了 HTTP Over QUIC 作为下一个 HTTP 版本的提议，将其命名为 HTTP/3。</p>
+<p>先看下 HTTP/3 有多快：<br><img src="/2020/12/28/http-3/6.gif" alt="img"><br>有没有震惊到？</p>
+<h5 id="QUIC"><a href="#QUIC" class="headerlink" title="QUIC"></a>QUIC</h5><p>大家都知道，UDP 比 TCP 快很多，但也有会丢包的问题，所以 UDP 的使用场景并没有那么流行，比如我们熟知的也就 QQ 在用 UDP，还有一些 DNS 服务使用 UDP。</p>
+<p>那其实让 UDP 更稳定不就行了？QQ 其实是在 UDP 的基础上自己实现了一层协议来保证稳定性（重试）。</p>
+<p>只是各自实现 UDP 扩展协议的做法不太「互联网」。</p>
+<p>Google 的思路也是很简单：先搞定，再标准化。</p>
+<p>事实上，QUIC 的拥塞算法是直接实现一遍 TCP 的算法。</p>
+<p>那 QUIC 都做了些什么呢：</p>
+<ol>
+<li>减少了 TCP 三次握手及 TLS 握手时间，甚至可以做到 0RTT。</li>
+<li>改进的拥塞控制。</li>
+<li>避免队头阻塞的多路复用。</li>
+<li>连接迁移。</li>
+<li>前向冗余纠错。</li>
+</ol>
+<p>再来看一下架构图：<br><img src="/2020/12/28/http-3/7.png" alt="img"></p>
+<h5 id="那么可以大规模使用了么？"><a href="#那么可以大规模使用了么？" class="headerlink" title="那么可以大规模使用了么？"></a>那么可以大规模使用了么？</h5><p>还不行：</p>
+<ul>
+<li>HTTP/3 还是草案状态，没有完全标准化</li>
+<li>浏览器还不支持——除了 MacOS Big Sur 以上版本的 Safari 浏览器以外，包括 Chrome 在内都需要手动开启支持。</li>
+</ul>
+<h5 id="如何启用？"><a href="#如何启用？" class="headerlink" title="如何启用？"></a>如何启用？</h5><ol>
+<li>改造自己的服务，比如，golang 有个 quic-go 的项目可以原生支持到 QUIC;</li>
+<li>使用 web 服务比如 NGINX， NGINX 已经开发了 QUIC 分支，可以下载源代码自行编译。</li>
+</ol>
+<h4 id="向下兼容"><a href="#向下兼容" class="headerlink" title="向下兼容"></a>向下兼容</h4><p>你可能会说，HTTP/3 现在没法投入生成啊。。。</p>
+<p>不急，其实可以先简单的升级一下 TLS 来提升 HTTP/2 的效率了，HTTP/3 正式发布了再支持也不迟。</p>
+<h5 id="升级到-TLS-1-3"><a href="#升级到-TLS-1-3" class="headerlink" title="升级到 TLS 1.3"></a>升级到 TLS 1.3</h5><p><strong>要求:</strong></p>
+<ul>
+<li>Apache 版本 2.4.37 +</li>
+<li>Nginx 版本 1.13.0+</li>
+<li>OpenSSL 版本 1.1.1 +</li>
+<li>证书支持，也就是不能使用 SHA1/RC4 等加密的证书了</li>
+</ul>
+<blockquote>
+<p>PS: IIS 的任何版本都不支持 TLS 1.3<br>升级也很简单，比如 Nginx 简单配置一下就行了：</p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssl_protocols TLSv1.2 TLSv1.3;</span><br></pre></td></tr></table></figure>
+
+<p><strong>效果：</strong></p>
+<p>毕竟 TLS 1.2 要 2 RTT，而 TLS 1.3 只需要 1 RTT，甚至 0 RTT，这里国外网站测试的数据通常是可以节省 100ms 以上的握手时间。 via <a href="https://medium.com/codavel-blog/measuring-tls-1-3-performance-ee301b1e8774" target="_blank" rel="noopener">https://medium.com/codavel-blog/measuring-tls-1-3-performance-ee301b1e8774</a></p>
+<h4 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h4><p>我其实蛮期待如果证券交易所的服务支持了 HTTP/3 会发生什么事情。。。</p>
+<h4 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h4><ul>
+<li><p><a href="https://zhuanlan.zhihu.com/p/32553477" target="_blank" rel="noopener">科普：QUIC 协议原理分析 - 知乎</a></p>
+</li>
+<li><p><a href="https://zh.wikipedia.org/wiki/%E5%BF%AB%E9%80%9FUDP%E7%BD%91%E7%BB%9C%E8%BF%9E%E6%8E%A5" target="_blank" rel="noopener">快速 UDP 网络连接 - 维基百科，自由的百科全书</a></p>
+</li>
+<li><p><a href="https://www.infoq.cn/article/ku4okqr8vh123a8dlccj" target="_blank" rel="noopener">解密 HTTP/2 与 HTTP/3 的新特性-InfoQ</a></p>
+</li>
+<li><p><a href="https://www.infoq.cn/article/whcobxfbgtphy7ijv1kp" target="_blank" rel="noopener">5 分钟看懂 HTTP3</a></p>
+</li>
+<li><p><a href="https://www.ssllabs.com/ssltest/analyze.html" target="_blank" rel="noopener">SSL Server Test</a></p>
+</li>
+<li><p><a href="https://www.cdn77.com/tls-test" target="_blank" rel="noopener">TLS Checker</a></p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/11/17/about-idempotent-in-http/" rel="prev" title="HTTP里的幂等性">
+      <i class="fa fa-chevron-left"></i> HTTP里的幂等性
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#很久以前"><span class="nav-number">1.</span> <span class="nav-text">很久以前</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP-时间轴"><span class="nav-number">2.</span> <span class="nav-text">HTTP 时间轴</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP-1-1"><span class="nav-number">3.</span> <span class="nav-text">HTTP&#x2F;1.1</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#HTTP-1-1-的问题"><span class="nav-number">3.1.</span> <span class="nav-text">HTTP&#x2F;1.1 的问题</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#HTTPS？"><span class="nav-number">3.2.</span> <span class="nav-text">HTTPS？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#简单复习一下-SSL-TLS："><span class="nav-number">3.3.</span> <span class="nav-text">简单复习一下 SSL&#x2F;TLS：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP-2"><span class="nav-number">4.</span> <span class="nav-text">HTTP&#x2F;2</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#HTTP-2-的特性："><span class="nav-number">4.1.</span> <span class="nav-text">HTTP&#x2F;2 的特性：</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#HTTP-2-VS-HTTP-1-1："><span class="nav-number">4.1.1.</span> <span class="nav-text">HTTP&#x2F;2 VS HTTP&#x2F;1.1：</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#HTTP-2-一定要加密么？"><span class="nav-number">4.2.</span> <span class="nav-text">HTTP&#x2F;2 一定要加密么？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#HTTP-2-的不足"><span class="nav-number">4.3.</span> <span class="nav-text">HTTP&#x2F;2 的不足</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#TLS-1-3"><span class="nav-number">4.4.</span> <span class="nav-text">TLS 1.3</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP-3"><span class="nav-number">5.</span> <span class="nav-text">HTTP&#x2F;3</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#QUIC"><span class="nav-number">5.1.</span> <span class="nav-text">QUIC</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#那么可以大规模使用了么？"><span class="nav-number">5.2.</span> <span class="nav-text">那么可以大规模使用了么？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#如何启用？"><span class="nav-number">5.3.</span> <span class="nav-text">如何启用？</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#向下兼容"><span class="nav-number">6.</span> <span class="nav-text">向下兼容</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#升级到-TLS-1-3"><span class="nav-number">6.1.</span> <span class="nav-text">升级到 TLS 1.3</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#结语"><span class="nav-number">7.</span> <span class="nav-text">结语</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考文章"><span class="nav-number">8.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="宋秋晓"
+      src="/images/head.png">
+  <p class="site-author-name" itemprop="name">宋秋晓</p>
+  <div class="site-description" itemprop="description">学习总结 思考感悟 知识管理</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">宋秋晓</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
