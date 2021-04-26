@@ -267,8 +267,9 @@ function generateXML(domStr) {
 那有无办法来解决捏，[rasterizeHTML.js](https://github.com/cburgmer/rasterizeHTML.js)这个库里，作者用一系列的 hack 技巧绕过来许多限制，比如：将`<img/>`的 url 转为 `dataURI`；将 `background` 从 `style` 中取出，修改 `url` 后重新插入样式表；将 `link` 的的样式通过 `ajax` down 下来然后注入`<style/>`等等等等...感兴趣可以去库里看看实现。不过 hack 技巧也不是万能的，作者在 readme 里给出了详细的 [Full list of limitations is here](https://github.com/cburgmer/rasterizeHTML.js/wiki/Limitations)
 
 ![img](10.jpg)
-即便是刨除前述提到的问题，svg 方案还有个缺点，就是我们觉得方便的 `foreignObject`，它完全不支持 ie 浏览器，下面是官方给出的支持度；另外 safari 浏览器也出于安全策略的原因支持度较差（[详细戳这里](https://github.com/tsayen/dom-to-image/issues/27)），包括 `dom-to-image` 作者也是推荐在服务端渲染好图片
+即便是刨除前述提到的问题，svg 方案还有个缺点，就是我们觉得方便的 `foreignObject`，它完全不支持 ie 浏览器，下面是官方给出的支持度
 ![img](11.jpg)
+另外 safari 浏览器也出于安全策略的原因支持度较差（[详细戳这里](https://github.com/tsayen/dom-to-image/issues/27)），包括 `dom-to-image` 作者也是推荐在服务端渲染好图片
 
 # 总结
 
