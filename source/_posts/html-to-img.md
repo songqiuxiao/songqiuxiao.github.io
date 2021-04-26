@@ -15,7 +15,7 @@ tags:
 
 1. 兼容性好，这是官网给出的 supported
    ![img](1.jpg)
-2. start 多、且一直有人在维护
+2. star 多、且一直有人在维护
    ![img](2.jpg)
 
 **👎🏻 缺点是：**
@@ -23,8 +23,7 @@ tags:
 1. 生成的图片样式基本上无法调整，有点类似截屏，不能添加一些额外的样式进去，比如边框等。
    具体可以参考官方给出的[feature 文档](https://html2canvas.hertzen.com/features)。
    ![img](3.jpg)
-2. 只能生成 `canvas` 格式
-3. 没办法渲染跨域资源
+2. 没办法渲染跨域资源
 
 # dom-to-img
 
@@ -43,6 +42,7 @@ tags:
 2. 维护的频率已经很低了
    ![img](5.jpg)
 3. 翻看 issue 的话，会有提到某些机型不支持的情况。<small>（我这边就没做具体测试，可以根据 issue 来解决）</small>
+4. 没办法渲染跨域资源
 
 # puppeteer - screenshot
 
@@ -114,7 +114,7 @@ page.close();
 
 看着这几个整体思路，无疑第 2、3 步会是非常麻烦的工作，尤其在实际业务场景下，dom 的排版会非常非常的复杂，html2canvas 的大部分逻辑其实也是在做这个事情。这也是为什么我说它灵活性不够的原因，canvas 的样式不像 css 那么灵活，你想加的样式，并不一定能够支持；但是用 canvas 的兼容性又足够好，只要保证浏览器支持 canvas 就行；由于实际场景下 dom 的复杂度，而整体逻辑又使用了递归，你懂的，长页面几千个 node 节点根本拦不住，所以性能很容易跟不上，html2canvas 内使用了大量的 Promise 来解决这个问题，提升了绘制速度。
 
-另外相比于 css，canvas 对文字排版的支持很弱，在 css 中天然支持的文本自动换行，其他 `letter-spacing` 字间距，`writing-mode` 竖排等都是一个 css 属性就可以实现。但是在 canvas 中，全部都不支持。要实现这种换行效果，就只能对着文本去支行计算，然后一行一行甚至一个字一个字渲染。。。。。
+另外相比于 css，canvas 对文字排版的支持很弱，在 css 中天然支持的文本自动换行，其他 `letter-spacing` 字间距，`writing-mode` 竖排等都是一个 css 属性就可以实现。但是在 canvas 中，全部都不支持。要实现这种换行效果，就只能对着文本去逐个计算，然后一行一行甚至一个字一个字渲染。。。。。
 
 不过尽管 html2canvas 主页表示它还处于实验室环境，不推荐大家在生产使用，但自 14 年起便已经被 Twitter 等用在了生产环境，所以虽然有诸多限制，稳定性应该还是保障的。
 ![img](9.jpg)
@@ -263,8 +263,8 @@ function generateXML(domStr) {
 }
 ```
 
-可以看到这个实现的思路还是比较简单的，因为省略了解析 dom 的部分，所以就不需要复杂的计算和递归，渲染速度自然要优于前者。巴特，一个最为严肃的问题在于：svg 无法加载外部资源，也就是说，在 svg 里面，无论是图片还是 css 中的背景图，这些资源都是无法加载的。在使用 canvas 实现时，因为我们是一个 node 一个 node 去画，所以不存在资源引用的问题。但使用 svg 实现，相当于我们把文档交给 svg 来渲染一遍，这对于我们来说是其实是无法控制的黑盒操作，是受 svg。
-那有无办法来解决捏，[rasterizeHTML.js](https://github.com/cburgmer/rasterizeHTML.js)这个库里，作者用一系列的 hack 技巧绕过来许多限制，比如：将`<img/>`的 url 转为 `dataURI`；将 `background` 从 `style` 中取出，修改 `url` 后重新插入样式表；将 `link` 的的样式通过 `ajax` down 下来然后注入`<style/>`等等等等...感兴趣可以去库里看看实现。不过 hack 技巧也不是万能的，作者在 readme 里给出了详细的 [Full list of limitations is here](https://github.com/cburgmer/rasterizeHTML.js/wiki/Limitations)
+可以看到这个实现的思路还是比较简单的，因为省略了解析 dom 的部分，所以就不需要复杂的计算和递归，渲染速度自然要优于前者。巴特，一个最为严肃的问题在于：svg 无法加载外部资源，也就是说，在 svg 里面，无论是图片还是 css 中的背景图，这些资源都是无法加载的。在使用 canvas 实现时，因为我们是一个 node 一个 node 去画，所以不存在资源引用的问题。但使用 svg 实现，相当于我们把文档交给 svg 来渲染一遍，这对于我们来说是其实是无法控制的黑盒操作，是受 svg 控制的。
+那有无办法来解决捏，[rasterizeHTML.js](https://github.com/cburgmer/rasterizeHTML.js)这个库里，作者用一系列的 hack 技巧绕过来许多限制，比如：将`<img/>`的 url 转为 `dataURI`；将 `background` 从 `style` 中取出，修改 `url` 后重新插入样式表；将 `link` 的的样式通过 `ajax` down 下来然后注入`<style/>`等等等等...感兴趣可以去库里看看实现。不过 hack 技巧也不是万能的，作者在 readme 里给出了详细的 [Full list of limitations](https://github.com/cburgmer/rasterizeHTML.js/wiki/Limitations)
 
 ![img](10.jpg)
 即便是刨除前述提到的问题，svg 方案还有个缺点，就是我们觉得方便的 `foreignObject`，它完全不支持 ie 浏览器，下面是官方给出的支持度
