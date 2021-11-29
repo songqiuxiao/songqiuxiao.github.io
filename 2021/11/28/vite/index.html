@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"songqiuxiao.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="如果说让你对公司的新项目做一下前端的技术选型，在打包方面，你会想用什么？我相信，高票答案肯定是 Webpack。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="写写 Vite">
+<meta property="og:url" content="https:&#x2F;&#x2F;songqiuxiao.github.io&#x2F;2021&#x2F;11&#x2F;28&#x2F;vite&#x2F;index.html">
+<meta property="og:site_name" content="宋秋晓">
+<meta property="og:description" content="如果说让你对公司的新项目做一下前端的技术选型，在打包方面，你会想用什么？我相信，高票答案肯定是 Webpack。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https:&#x2F;&#x2F;songqiuxiao.github.io&#x2F;2021&#x2F;11&#x2F;28&#x2F;vite&#x2F;1.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;songqiuxiao.github.io&#x2F;2021&#x2F;11&#x2F;28&#x2F;vite&#x2F;2.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;songqiuxiao.github.io&#x2F;2021&#x2F;11&#x2F;28&#x2F;vite&#x2F;3.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;songqiuxiao.github.io&#x2F;2021&#x2F;11&#x2F;28&#x2F;vite&#x2F;4.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;songqiuxiao.github.io&#x2F;2021&#x2F;11&#x2F;28&#x2F;vite&#x2F;5.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;songqiuxiao.github.io&#x2F;2021&#x2F;11&#x2F;28&#x2F;vite&#x2F;6.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;songqiuxiao.github.io&#x2F;2021&#x2F;11&#x2F;28&#x2F;vite&#x2F;7.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;songqiuxiao.github.io&#x2F;2021&#x2F;11&#x2F;28&#x2F;vite&#x2F;8.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;songqiuxiao.github.io&#x2F;2021&#x2F;11&#x2F;28&#x2F;vite&#x2F;9.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;songqiuxiao.github.io&#x2F;2021&#x2F;11&#x2F;28&#x2F;vite&#x2F;10.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;songqiuxiao.github.io&#x2F;2021&#x2F;11&#x2F;28&#x2F;vite&#x2F;11.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;songqiuxiao.github.io&#x2F;2021&#x2F;11&#x2F;28&#x2F;vite&#x2F;12.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;songqiuxiao.github.io&#x2F;2021&#x2F;11&#x2F;28&#x2F;vite&#x2F;13.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;songqiuxiao.github.io&#x2F;2021&#x2F;11&#x2F;28&#x2F;vite&#x2F;14.png">
+<meta property="article:published_time" content="2021-11-28T07:21:56.000Z">
+<meta property="article:modified_time" content="2021-11-29T18:08:06.676Z">
+<meta property="article:author" content="宋秋晓">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;songqiuxiao.github.io&#x2F;2021&#x2F;11&#x2F;28&#x2F;vite&#x2F;1.jpg">
+
+<link rel="canonical" href="https://songqiuxiao.github.io/2021/11/28/vite/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>写写 Vite | 宋秋晓</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">宋秋晓</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">You are the JavaScript in my HTML</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://songqiuxiao.github.io/2021/11/28/vite/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="宋秋晓">
+      <meta itemprop="description" content="月亮是我抛的硬币🌙 两边都是梦见你">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="宋秋晓">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          写写 Vite
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-11-28 15:21:56" itemprop="dateCreated datePublished" datetime="2021-11-28T15:21:56+08:00">2021-11-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-11-30 02:08:06" itemprop="dateModified" datetime="2021-11-30T02:08:06+08:00">2021-11-30</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>如果说让你对公司的新项目做一下前端的技术选型，在打包方面，你会想用什么？我相信，高票答案肯定是 Webpack。</p>
+<a id="more"></a>
+
+<p>几年前我在上家公司，一路从小白摸爬滚打做前端的路上，第一次接触到的打包工具也是 webpack，功能确实强大，生态环境也很好。一度以为打包要被 webpack 一统天下了。<br>不过后来换到当前公司，项目代码本身大了几十倍，需要处理的 javascript 代码量也呈指数级增长，本地起项目直接带不动，即便把一部分入口文件过滤掉，也要 build 个几分钟的，所以那段时间的工作状态就是，npm run start，然后去倒杯水，泡个茶<del>（喂！</del> 如此循环往复，迟钝的反馈会极大地影响开发者的开发效率和幸福感。<br><img src="/2021/11/28/vite/1.jpg" alt="img"><br>当然我们后来为了工作体验，也是各种删减代码内容、加缓存、拆分仓库等等各种工程优化，但是脑子里突然就想过，有没有考虑其他更高效的打包工具呢？也就是这个时候去网上翻了各种打包文件的对比，vite 应该算是里面比较出众的，这两年也很火。</p>
+<h4 id="vite-优势"><a href="#vite-优势" class="headerlink" title="vite 优势"></a>vite 优势</h4><p>当前 webpack 打包有两大痛点：</p>
+<ul>
+<li>服务器启动慢</li>
+<li>更新慢</li>
+</ul>
+<p>webpack 会先打包 ，然后启动开发服务器，请求服务器时直接给予打包结果。 而 vite 是直接启动开发服务器，请求哪个模块再对该模块进行实时编译。这种按需动态编译的方式，极大的缩减了编译时间，项目越复杂、模块越多，vite 的优势越明显。在 HMR（热更新）方面，当改动了一个模块后，仅需让浏览器重新请求该模块即可，不像 webpack 那样需要把该模块的相关依赖模块全部编译一次，效率更高。</p>
+<p>vite 通过在一开始将应用中的模块区分为 <strong>依赖</strong> 和 <strong>源码</strong> 两类，改进了开发服务器启动时间。<br><strong>依赖方面</strong>vite 将会使用 esbuild 预构建依赖。Esbuild 使用 Go 编写，并且比以 JavaScript 编写的打包器预构建依赖快 10-100 倍。因为 js 跟 go 相比实在是太慢了，js 的一般操作都是毫秒计，go 则是纳秒。<br><strong>源码方面</strong>vite 以原生 ESM 方式提供源码。这实际上是让浏览器接管了打包程序的部分工作：vite 只需要在浏览器请求源码时进行转换并按需提供源码。根据情景动态导入代码，即只在当前屏幕上实际使用时才会被处理。<br>官方图解如下：</p>
+<p><img src="/2021/11/28/vite/2.png" alt="img"><br><img src="/2021/11/28/vite/3.png" alt="img"><br>在 vite 中，HMR 是在原生 ESM 上执行的。当编辑一个文件时，vite 只需要精确地使已编辑的模块与其最近的 HMR 边界之间的链失活，使得无论应用大小如何，HMR 始终能保持快速更新。</p>
+<p>vite 同时利用 HTTP 头来加速整个页面的重新加载（再次让浏览器为我们做更多事情）：源码模块的请求会根据 304 Not Modified 进行协商缓存，而依赖模块请求则会通过 <code>Cache-Control: max-age=31536000,immutable</code> 进行强缓存，因此一旦被缓存它们将不需要再次请求。</p>
+<h4 id="围观源码仓库"><a href="#围观源码仓库" class="headerlink" title="围观源码仓库"></a>围观源码仓库</h4><p>我去<a href="https://github.com/vitejs" target="_blank" rel="noopener">vitejs</a>仓库上看了下，共有 5 个相关的项目：<br><img src="/2021/11/28/vite/4.jpg" alt="img"><br>其中 vite 是核心库，而 create-vite-app 是开发的脚手架工具，取名很像 create-react-app，通过集成 vite-plugin-react-pages 和 vite-plugin-react，vite 也能开发 react 项目。<br>由此看出尤大决心很大，不仅是希望依托于 vue 强大的生态环境让他大火，更希望包揽 react 的圈子，想让 vite 和 webpack 一较高下的意图很明显。</p>
+<h4 id="内部工作原理"><a href="#内部工作原理" class="headerlink" title="内部工作原理"></a>内部工作原理</h4><p>还是根据上面的基于 ESM 的构建模式图片为基础，这里我们结合 react 进行原理举例剖析：</p>
+<h5 id="type-”module”"><a href="#type-”module”" class="headerlink" title="type=”module”"></a>type=”module”</h5><p>vite 首先会在本地帮你启动一个服务器，当浏览器读取到 index.html 这个入口文件时，会发现里面会用 <code>type=&quot;module&quot;</code>的方式去加载文件。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"module"</span> <span class="attr">src</span>=<span class="string">"/src/main.jsx"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/11/28/vite/5.jpg" alt="img"><br>那给 script 标签设置成 <code>type=&quot;module&quot;</code> 有什么好处呢？就是因为 vite 利用了浏览器原生 ES Module 的支持，会将这个脚本视为 ES 标准模块，然后以模块的方式去加载跟执行。</p>
+<h5 id="依赖预构建-ESModule"><a href="#依赖预构建-ESModule" class="headerlink" title="依赖预构建 ESModule"></a>依赖预构建 ESModule</h5><p>文件之间的互相导入解决了，但是我们的依赖管理是采用 npm 的，而 npm 包大部分是采用 CommonJS 标准并没有兼容 ES 标准。关于这一点 vite 官方文档也写了，在开发阶段中，会首选采用依赖预构建的过程。<a href="https://cn.vitejs.dev/guide/dep-pre-bundling.html" target="_blank" rel="noopener">官方解释</a>如下：</p>
+<p><img src="/2021/11/28/vite/6.jpg" alt="img"><br>其中有一点，就是 Vite 的开发服务器会将所有代码视为原生 ES 模块，会将作为 CommonJS 或 UMD 发布的依赖项转换为 ESM。这样的话在 <code>/src/main.jsx</code> 文件中可以以 es 模块的方式来进行组织和编写，且不需要打包。</p>
+<ol>
+<li>首先加载 main.jsx 文件：</li>
+</ol>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">"react"</span>;</span><br><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">"react-dom"</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">"./index.css"</span>;</span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">"./App"</span>;</span><br><span class="line"></span><br><span class="line">ReactDOM.render(</span><br><span class="line">  &lt;React.StrictMode&gt;</span><br><span class="line">    &lt;App /&gt;</span><br><span class="line">  &lt;<span class="regexp">/React.StrictMode&gt;,</span></span><br><span class="line"><span class="regexp">  document.getElementById("root")</span></span><br><span class="line"><span class="regexp">);</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>再依次发送加载 react.js、react-dom.js、index.css 和 App.jsx 文件</li>
+</ol>
+<p><img src="/2021/11/28/vite/7.jpg" alt="img"><br>这些都加载过来之后，把它创建应用程序在页面中显示。这样做的好处有两点：</p>
+<ul>
+<li>在开发阶段不需要进行一个依赖构建的计算，不管我的项目有多大，我的速度都是最快的。</li>
+<li>按需加载，浏览器打开了什么页面，我就加载这个页面相关的文件，不相关的绝不加载，这样的话开发的速度就更好了。</li>
+</ul>
+<ol start="3">
+<li>三方模块解析</li>
+</ol>
+<p>前面虽然说知道要加载 react.js、react-dom.js、index.css 和 App.jsx 这些文件，但是对于浏览器本身来说，其实只知道 index.css 和 App.jsx 这俩相对路径的文件的，那么 react.js、react-dom.js 怎么引入的呢？总不至于让浏览器下个 npm 吧，我们看看打包之后文件：<br><img src="/2021/11/28/vite/8.jpg" alt="img"><br>这就是预构建的好处，提前把需要的第三方依赖都放到<code>node_modules/.vite</code>下面，然后把引入重写成</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> __vite__cjsImport0_react <span class="keyword">from</span> <span class="string">"/node_modules/.vite/react.js?v=e34eeb44"</span>;</span><br></pre></td></tr></table></figure>
+
+<p>诶？有没有小伙伴发现<code>?v=e34eeb44</code>这个东西，这个用法倒是显而易见的，为了缓存，其实也就是前面提到的缓存策略<br>可以看到首次请求如下：<br><img src="/2021/11/28/vite/9.jpg" alt="img"><br>之后的请求就会走缓存：<br><img src="/2021/11/28/vite/10.jpg" alt="img"><br>如果文件发生了变化就会更新后面的 hash 来控制文件更新，把缓存的工作任务交给浏览器来做，还是很巧妙的。<br>然后不知道大家有没有发现一个事情，看下面的图，<del>我的 chrome 从白色变成黑色说明我博客从白天写到了黑夜，啊不是</del>，就是引入的文件，依然是 jsx 文件格式，那么浏览器到底是怎么识别的？<br><img src="/2021/11/28/vite/11.png" alt="img"><br>其实是 vite 做了额外的事情，仔细看文件的 <code>content-type</code> 其实是<code>application/javascript</code>，这说明这个文件已经被 vite 进行了解析编译，就好比 webpack 里 babel-loader 的功能，那么 vite 是依赖什么进行转换的呢，没错就是 esbuild。<br><img src="/2021/11/28/vite/12.png" alt="img"><br><img src="/2021/11/28/vite/13.png" alt="img"><br>vite 使用 esbuild 来作为部分文件类型的解析器，它的解析编译跟 webpack 是不一样的。webpack 是提前将所有文件编译为浏览器可以接受的类型，而 vite 则是在接收浏览器发起的 http 请求之后再去编译对应文件。<br>你可能会想，每次页面加载都需要编译一次文件，这对页面的加载速度考验极大呀！这里我们通过这张图比较发现，esbuild 的构建速度是敲快的<a href="https://esbuild.github.io/" target="_blank" rel="noopener">(可以戳这里看)</a>！是不是超心动的<br><img src="/2021/11/28/vite/14.png" alt="img"><br>不过正式环境上 vite 最终还是没采用 esbuild。<a href="https://cn.vitejs.dev/guide/why.html#why-bundle-for-production" target="_blank" rel="noopener">解释见官方文档</a><br>以上差不多是我对 vite 的一些理解，新的项目用这个工具我可能会更适应。目前我司的代码配置（入口文件在后端代码里）直接去替换 vite 可能还不是很熟悉（其实写这篇博客的时候还是一直在顺便替换的，奈何遇到的问题太多，后面改动成功的话，说不定又是一篇新的博客呢！）</p>
+<h4 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h4><p>个人感觉，如果是个新的 vue 项目，可以试试直接用 vite 来作为打包生产力；如果是老项目的话，建议用 vite 来作为开发环境生产力，提效还是杠杠的，但是生产环境还得是 webpack 更稳定一些。<br>不知道按照这个势头，最后 vite 会不会撼动 webpack 的地位呢，毕竟提升研发效率，是技术人永恒的追求。</p>
+
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      
+    </div>
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/04/25/html-to-img/" rel="prev" title="前端生成图片">
+      <i class="fa fa-chevron-left"></i> 前端生成图片
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#vite-优势"><span class="nav-number">1.</span> <span class="nav-text">vite 优势</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#围观源码仓库"><span class="nav-number">2.</span> <span class="nav-text">围观源码仓库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内部工作原理"><span class="nav-number">3.</span> <span class="nav-text">内部工作原理</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#type-”module”"><span class="nav-number">3.1.</span> <span class="nav-text">type&#x3D;”module”</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#依赖预构建-ESModule"><span class="nav-number">3.2.</span> <span class="nav-text">依赖预构建 ESModule</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#小结"><span class="nav-number">4.</span> <span class="nav-text">小结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="宋秋晓"
+      src="/images/head.png">
+  <p class="site-author-name" itemprop="name">宋秋晓</p>
+  <div class="site-description" itemprop="description">月亮是我抛的硬币🌙 两边都是梦见你</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">宋秋晓</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+  1
+  <script type="text/javascript" src="/js/love.js"></script>
+</body>
+</html>
